@@ -14,7 +14,7 @@ Adaptación del Full Day de MyWorkIn (edición del 23 de agosto) a Grupo Vivargo
 | `chat/` | Recursos para las demos de Claude Chat | P3 |
 | `projects/` | `Project_Comercial_Alquiler/`: instrucciones (`00_`) y 6 documentos listos para subir a Claude | P4 |
 | `skills/` | `cotizar-alquiler-equipo.skill` y `revisar-riesgos-izaje.skill` (más sus carpetas), y en `demos/` el plan de izaje de práctica | P4 |
-| `cowork/` | `Facturas_Proveedores_Sin_Ordenar/` (80 facturas PDF para ordenar) y `Almacen_Conciliacion/` (inventario vs. guías) | P5 |
+| `cowork/` | `Facturas_Proveedores_Sin_Ordenar/` (80 facturas PDF), `Radar_Proyectos_MINEM/` (cartera MINEM × flota), `Benchmark_Precios_MyWStore/` (precios vs. Wong, Metro y Plaza Vea) y `Almacen_Conciliacion/` | P5 |
 | `design/` | Recursos para las demos de Claude Design | P6 |
 | `code/` | Recursos para las demos de Claude Code | P6 |
 | `schedule/` | `Horometros_Flota/` (alerta de mantenimiento preventivo) | P7 |

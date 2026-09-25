@@ -159,33 +159,55 @@ va a una carpeta <span class="k">_Revisar</span> con el motivo. No la sumes.</sp
   ${footer("Demo · Facturas")}
 </div></div>`);
 
-/* 6 · Demo benchmark de la competencia */
-slides.push(`<div class="slide bg-tint"><div class="pad">
-  ${titlebar("Demo alternativa · benchmark de la competencia","Cowork navega la web y cita cada fuente")}
+/* 6 · Demo radar de proyectos MINEM × flota */
+slides.push(`<div class="slide bg-light"><div class="pad">
+  ${titlebar("Demo · radar de proyectos mineros","¿Qué proyectos del MINEM hacen match con nuestra flota?")}
   <div style="margin-top:14px;flex:1;display:flex;align-items:center;gap:22px">
-    ${code("Prompt · benchmark de competencia",`<span style="white-space:pre-wrap">Arma un <span class="k h">benchmark de la competencia</span> de Grupo Vivargo:
+    ${code("Prompt · carpeta cowork/Radar_Proyectos_MINEM",`<span style="white-space:pre-wrap">Lee la <span class="k h">Cartera de Proyectos de Inversión Minera 2026</span>
+del MINEM (el PDF de esta carpeta) y el <span class="k">catálogo de flota</span>.
 
-<span class="c">A. Empresas que alquilan grúas y equipos de izaje en Perú</span>
-<span class="c">B. Marcas que compiten con JLG en plataformas y telehandlers</span>
+1. Extrae los proyectos en <span class="k">ejecución o por iniciar</span>:
+   nombre, empresa, región, etapa, inicio y fin de
+   ejecución, inversión y tipo de proyecto.
+2. Cruza cada uno con la flota: qué equipos podría
+   necesitar <span class="c">(grúas para montaje, camas bajas, manlift…)</span>
+   y a qué sede queda más cerca <span class="c">(Lima, Arequipa, Trujillo)</span>.
+3. Dale un <span class="k">nivel de match</span>: alto, medio o bajo, con el motivo.
+4. Entrégame un <span class="k">Excel</span> ordenado por match y por fecha de
+   inicio, con la página del PDF de donde sacaste cada dato.
 
-<span class="k">Búscalas tú</span> y elige las 5 más relevantes de cada frente.
-Revisa sus webs públicas con el navegador, paso a paso.
-
-Devuélveme un <span class="k">Excel comparativo</span>:
-1. Empresa o marca · sedes · tipos de equipo · capacidades
-2. Servicios que ofrecen <span class="c">(operador, plan de izaje, etc.)</span>
-3. Qué comunican como diferencial
-4. Dónde Vivargo tiene ventaja y dónde tiene brechas
-5. <span class="k">Fuente</span>: URL y fecha de consulta en cada fila
-
-<span class="k">Si un dato no está publicado</span>, márcalo como
-"no publicado" &mdash; no inventes cifras ni nombres.</span>`)}
-    <div class="anim" style="flex:1;background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow-sm)"><div style="font-family:var(--fd);font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray)">Por qué el prompt está armado así</div><div style="display:flex;flex-direction:column;gap:10px;margin-top:12px"><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="search" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">No le das nombres: los busca él y ves de dónde salen</span></div><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="link" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">Cada fila con URL y fecha: se puede auditar</span></div><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="ban" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">«No publicado» en vez de un número inventado</span></div></div><div style="font-family:var(--fd);font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray);margin-top:18px;padding-top:16px;border-top:1px solid var(--line)">Qué haces tú después</div><div style="display:flex;flex-direction:column;gap:10px;margin-top:12px"><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="user-check" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">Validar con el equipo comercial lo que sabe del mercado</span></div><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="eye" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">Abrir 2 o 3 fuentes al azar y confirmar</span></div></div></div>
+<span class="k">No inventes nada:</span> si un dato no está en el PDF,
+escribe «no publicado».</span>`)}
+    <div class="anim" style="flex:1;background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow-sm)"><div style="font-family:var(--fd);font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray)">En la carpeta</div><div style="display:flex;flex-direction:column;gap:10px;margin-top:12px"><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="file-text" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">Cartera de Inversión Minera 2026 · PDF público del MINEM, 109 páginas</span></div><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="truck" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">Catálogo de flota de Vivargo · datos ficticios del Project</span></div></div><div style="font-family:var(--fd);font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray);margin-top:18px;padding-top:16px;border-top:1px solid var(--line)">Qué mirar en el resultado</div><div style="display:flex;flex-direction:column;gap:10px;margin-top:12px"><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="target" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">¿Explica por qué cada proyecto es match alto?</span></div><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="map-pin" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">¿Considera la cercanía a nuestras sedes?</span></div><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="file-search" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">¿Cita la página del PDF de cada dato?</span></div></div></div>
   </div>
-  ${footer("Demo · Benchmark de competencia")}
+  ${footer("Demo · Radar de proyectos")}
 </div></div>`);
 
-/* 7 · Demo Excel + archivos · almacenes */
+/* 7 · Demo benchmark de precios MyWStore */
+slides.push(`<div class="slide bg-light"><div class="pad">
+  ${titlebar("Demo · benchmark de precios en la web","MyWStore vs. Wong, Metro y Plaza Vea")}
+  <div style="margin-top:14px;flex:1;display:flex;align-items:center;gap:22px">
+    ${code("Prompt · carpeta cowork/Benchmark_Precios_MyWStore",`<span style="white-space:pre-wrap">En el Excel <span class="k h">Precios_MyWStore</span> están los 20 productos de
+nuestra tienda de consumo masivo con su precio.
+
+1. Entra a las webs de <span class="k">Wong, Metro y Plaza Vea</span> y busca
+   cada producto con la <span class="k">misma marca y presentación</span>.
+2. Completa el precio de cada cadena, la URL y la fecha
+   de consulta. Si hay promoción, anota el precio normal
+   y el de oferta por separado.
+3. Agrega una hoja de <span class="k">análisis</span>: diferencia en S/ y en %
+   contra el más barato, semáforo por producto y
+   un gráfico por categoría.
+4. Cierra con <span class="k">5 recomendaciones</span> de precio para MyWStore.
+
+Si un producto no aparece igual en una web, escribe
+<span class="c">«no encontrado»</span>: <span class="k">no lo reemplaces por otro parecido.</span></span>`)}
+    <div class="anim" style="flex:1;background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow-sm)"><div style="font-family:var(--fd);font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray)">En la carpeta</div><div style="display:flex;flex-direction:column;gap:10px;margin-top:12px"><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="store" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">MyWStore · tienda ficticia, precios inventados</span></div><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="shopping-cart" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">20 productos: abarrotes, lácteos, bebidas, limpieza, cuidado personal y snacks</span></div><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="globe" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">Webs públicas de Wong, Metro y Plaza Vea</span></div></div><div style="font-family:var(--fd);font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray);margin-top:18px;padding-top:16px;border-top:1px solid var(--line)">Qué mirar en el resultado</div><div style="display:flex;flex-direction:column;gap:10px;margin-top:12px"><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="scale" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">¿Comparó la misma marca y presentación?</span></div><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="tag" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">¿Separó el precio normal del de oferta?</span></div><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="link" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">¿Cada precio tiene su URL y fecha?</span></div></div></div>
+  </div>
+  ${footer("Demo · Benchmark de precios")}
+</div></div>`);
+
+/* 8 · Demo Excel + archivos · almacenes */
 slides.push(`<div class="slide bg-light"><div class="pad">
   ${titlebar("Demo alternativa · administración de almacenes","Inventario vs. guías: 5 reportes de Excel en minutos")}
   <div class="codeblock anim" style="margin-top:10px;padding:16px 20px">
@@ -238,7 +260,7 @@ del almacén.</div>
   ${footer("Demo · Almacenes")}
 </div></div>`);
 
-/* 8 · Buenas prácticas */
+/* 9 · Buenas prácticas */
 slides.push(`<div class="slide bg-tint"><div class="pad">
   ${titlebar("Buenas prácticas","Usando Cowork sin perder criterio ni tiempo")}
   <div class="grid anim" style="grid-template-columns:1fr 1fr;margin-top:22px;gap:14px;flex:1;align-items:stretch">
@@ -254,7 +276,7 @@ slides.push(`<div class="slide bg-tint"><div class="pad">
   ${footer("Buenas prácticas")}
 </div></div>`);
 
-/* 9 · Qué NO delegar */
+/* 10 · Qué NO delegar */
 slides.push(`<div class="slide bg-dark2"><div class="pad" style="justify-content:center">
   <div class="kicker anim"><span class="bar"></span>Qué NO delegar completamente</div>
   <h1 class="title anim" style="font-size:44px;margin-top:14px;max-width:30ch;line-height:1.2">La IA analiza. El humano <span style="color:var(--blue-l)">decide.</span></h1>
@@ -265,7 +287,7 @@ slides.push(`<div class="slide bg-dark2"><div class="pad" style="justify-content
   ${brand()}
 </div></div>`);
 
-/* 10 · Frases */
+/* 11 · Frases */
 slides.push(`<div class="slide bg-dark"><div class="pad" style="justify-content:center">
   ${ic('quote','blue',30)}
   <h1 class="title anim" style="font-size:36px;margin-top:22px;max-width:38ch;line-height:1.3">Cuando hay archivos, no copies y pegues todo al chat. <span style="color:var(--blue-l)">Usa Cowork.</span></h1>
