@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FullDay P2 — Fundamentos rápidos de IA y Claude · MyWorkIn × Grupo Vivargo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{--navy:#003C78;--blue:#0090C0;--blue-l:#57B6DD;--tint:#EAF3FA;--ink:#132a47;--gray:#5B6B7B;--line:#dbe6ef;--amber:#F2A23C;--shadow:0 18px 40px -18px rgba(2,30,60,.45);--shadow-sm:0 8px 22px -12px rgba(2,30,60,.35);--fd:'Sora',sans-serif;--fb:'Inter',sans-serif;--fc:'JetBrains Mono',monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#05101f;font-family:var(--fb);-webkit-font-smoothing:antialiased;overflow:hidden}
+.viewport{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 30%,#0a1f3a,#05101f 75%)}
+.deck{position:relative;transform-origin:center center}
+.stage{position:relative;width:1280px;height:720px;border-radius:18px;overflow:hidden;box-shadow:0 40px 120px -30px rgba(0,0,0,.8)}
+.slide{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .55s ease,transform .55s ease;transform:scale(1.02);overflow:hidden}
+.slide.active{opacity:1;visibility:visible;transform:scale(1)}
+.pad{position:absolute;inset:0;padding:64px 72px;display:flex;flex-direction:column}
+.bg-light{background:radial-gradient(1200px 500px at 88% -10%,rgba(0,144,192,.10),transparent 60%),linear-gradient(180deg,#fff,#f3f8fc)}
+.bg-tint{background:radial-gradient(900px 500px at 90% 110%,rgba(0,144,192,.10),transparent 60%),linear-gradient(180deg,#f6fafd,#eef5fb)}
+.bg-dark{background:radial-gradient(900px 600px at 82% 8%,rgba(87,182,221,.30),transparent 55%),radial-gradient(700px 500px at 10% 100%,rgba(0,144,192,.22),transparent 60%),linear-gradient(135deg,#01244a,#003C78 58%,#0a5390)}
+.bg-dark2{background:radial-gradient(800px 600px at 85% 12%,rgba(87,182,221,.22),transparent 55%),linear-gradient(150deg,#01182f,#012a52 70%)}
+.kicker{font-family:var(--fb);font-weight:700;font-size:14px;letter-spacing:3px;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:10px}
+.bg-dark .kicker,.bg-dark2 .kicker{color:var(--blue-l)}
+.kicker .bar{width:34px;height:3px;border-radius:3px;background:currentColor}
+h1.title{font-family:var(--fd);font-weight:800;color:var(--navy);font-size:42px;line-height:1.08;letter-spacing:-.5px;margin-top:14px}
+.bg-dark h1.title,.bg-dark2 h1.title{color:#fff}
+.lead{font-size:18px;color:var(--gray);margin-top:12px;max-width:62ch;line-height:1.5}
+.bg-dark .lead,.bg-dark2 .lead{color:#bcd6ec}
+.logo{height:40px}.logo.white{filter:brightness(0) invert(1)}
+.brandmark{position:absolute;right:60px;bottom:34px;height:30px;opacity:.95}.brandmark.cobrand{display:flex;align-items:center;gap:14px}.brandmark.cobrand img{height:26px;width:auto}.cb-sep{width:1px;height:22px;background:rgba(255,255,255,.35)}.logo-plate{align-items:center;gap:18px;align-self:flex-start}.logo-plate .vv{filter:brightness(0)}.logo-plate .cb-sep{background:#d5dbe2;height:34px}
+.footer{position:absolute;left:72px;right:72px;bottom:26px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--gray);border-top:1px solid var(--line);padding-top:10px}
+.footer .sec{color:var(--blue);font-weight:700}
+.bg-dark .footer,.bg-dark2 .footer{border-color:rgba(255,255,255,.14);color:#9fc0dc}.bg-dark .footer .sec,.bg-dark2 .footer .sec{color:var(--blue-l)}
+.grid{display:grid;gap:18px}
+.ic{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;flex:none}
+.ic svg{stroke-width:2.1}
+.ic.navy{background:var(--navy);color:#fff}.ic.blue{background:linear-gradient(135deg,var(--blue),var(--blue-l));color:#fff}.ic.amber{background:linear-gradient(135deg,var(--amber),#f6bd78);color:#fff}.ic.soft{background:var(--tint);color:var(--navy)}.ic.ghost{background:rgba(255,255,255,.14);color:#fff}
+.imgwrap{border-radius:16px;overflow:hidden;box-shadow:var(--shadow);background:#fff}
+.imgwrap img{width:100%;height:100%;object-fit:contain;display:block}
+.slide .anim{opacity:0;transform:translateY(22px);transition:opacity .6s cubic-bezier(.2,.7,.3,1),transform .6s cubic-bezier(.2,.7,.3,1)}
+.slide.active .anim{opacity:1;transform:none}
+.ctl{position:fixed;z-index:50;display:flex;align-items:center;gap:14px;bottom:22px;left:50%;transform:translateX(-50%);background:rgba(6,18,34,.66);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.12);padding:8px 14px;border-radius:999px;color:#cfe0ee;font-size:13px;font-weight:600}
+.ctl button{all:unset;cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:50%;color:#dbe9f6}.ctl button:hover{background:rgba(255,255,255,.12)}
+.progress{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,var(--blue),var(--blue-l));z-index:60;transition:width .4s ease}
+.hint{position:fixed;top:14px;right:16px;z-index:50;color:#7f9bb5;font-size:12px}
+</style></head>
+<body>
+<div class="progress" id="progress"></div><div class="hint">← → · F pantalla completa</div>
+<div class="viewport"><div class="deck" id="deck"><div class="stage" id="stage"></div></div></div>
+<div class="ctl"><button id="prev"><i data-lucide="chevron-left"></i></button><span><span id="cur">1</span> / <span id="total">1</span></span><button id="next"><i data-lucide="chevron-right"></i></button></div>
+<script>
+const LOGO="logo_myworkin.png";const LOGO_VV="media/logo_vivargo.svg";const SEC="FullDay · Claude e IA para el trabajo · Grupo Vivargo";
+function ic(n,c,s=22){return `<span class="ic ${c}" style="width:${s+22}px;height:${s+22}px"><i data-lucide="${n}" style="width:${s}px;height:${s}px"></i></span>`}
+function footer(t){return `<div class="footer anim"><span>${SEC}</span><span class="sec">${t}</span></div>`}
+function titlebar(k,t){return `<div class="titlebar anim"><div class="kicker"><span class="bar"></span>${k}</div><h1 class="title">${t}</h1></div>`}
+function brand(){return `<span class="brandmark cobrand"><img src="${LOGO}" class="logo white" alt="MyWorkIn"><span class="cb-sep"></span><img src="${LOGO_VV}" class="logo vv" alt="Grupo Vivargo"></span>`}
+const slides=[];
+
+/* 1 · Cover */
+slides.push(`<div class="slide bg-dark"><div class="pad">
+  <div class="kicker anim"><span class="bar"></span>FullDay · Bloque 2</div>
+  <h1 class="title anim" style="font-size:72px;margin-top:14px;max-width:22ch">Fundamentos rápidos de IA y Claude</h1>
+  <p class="lead anim" style="font-size:22px;margin-top:16px">Lo mínimo que tienes que saber — sin teoría pesada — para entender lo que veremos hoy.</p>
+  <div class="anim" style="margin-top:20px;color:#9fc4de;font-size:14px">25 minutos</div>
+  ${brand()}
+</div></div>`);
+
+/* 2 · Qué está pasando */
+slides.push(`<div class="slide bg-light"><div class="pad">
+  ${titlebar("Qué está pasando","La IA dejó de ser un tema de laboratorio")}
+  <div class="grid anim" style="grid-template-columns:1fr 1fr 1fr;margin-top:24px;gap:16px;flex:1;align-items:stretch">
+  ${[["users","La usan millones","Todos los días · para trabajo real"],["rocket","Cambia rápido","Los modelos mejoran cada mes"],["briefcase","Toca todos los roles","No es un tema técnico — es un tema profesional"]].map(c=>`<div style="background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column">${ic(c[0],'navy',18)}<div style="font-family:var(--fd);font-weight:800;font-size:20px;color:var(--navy);margin-top:14px">${c[1]}</div><p style="font-size:14px;color:var(--gray);margin-top:8px;line-height:1.5">${c[2]}</p></div>`).join("")}
+  </div>
+  <p class="anim" style="text-align:center;font-family:var(--fd);font-style:italic;font-weight:700;color:var(--navy);font-size:15px;margin-top:16px">Y ya no es opcional entender cómo funciona.</p>
+  ${footer("Bloque 2")}
+</div></div>`);
+
+/* 3 · Qué es IA (usa ai_ml_dl.png) */
+slides.push(`<div class="slide bg-tint"><div class="pad">
+  ${titlebar("Qué es IA","Aterrizando los términos que verás por todas partes")}
+  <div style="display:flex;gap:24px;margin-top:20px;flex:1;align-items:center">
+    <div class="anim imgwrap" style="flex:1.1;height:420px;padding:20px"><img src="assets/ai_ml_dl.png" alt="AI ML DL"></div>
+    <div class="anim" style="flex:1;display:flex;flex-direction:column;gap:12px">
+    ${[["Inteligencia Artificial","El paraguas grande — cualquier máquina que simula tareas humanas","brain"],["Machine Learning","Aprende de datos en lugar de seguir reglas fijas","chart-line"],["Deep Learning","Redes neuronales — la base de los LLMs actuales","network"]].map(c=>`<div style="background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow-sm)">${ic(c[2],'blue',14)}<div><div style="font-family:var(--fd);font-weight:700;font-size:15px;color:var(--navy)">${c[0]}</div><div style="font-size:12.5px;color:var(--gray);margin-top:2px;line-height:1.4">${c[1]}</div></div></div>`).join("")}
+    </div>
+  </div>
+  ${footer("Bloque 2")}
+</div></div>`);
+
+/* 4 · Qué es un LLM */
+slides.push(`<div class="slide bg-light"><div class="pad">
+  ${titlebar("Qué es un LLM","Large Language Model · el motor detrás de Claude, ChatGPT y Gemini")}
+  <div class="anim" style="margin-top:24px;background:linear-gradient(160deg,var(--navy),#0a5390);border-radius:18px;padding:30px 36px;color:#fff;max-width:940px;box-shadow:var(--shadow)">
+    ${ic('cpu','blue',26)}
+    <p style="font-family:var(--fd);font-weight:700;font-size:26px;margin-top:16px;line-height:1.35">Un modelo entrenado con enormes cantidades de texto <span style="color:var(--blue-l)">para entender lenguaje y generar respuestas.</span></p>
+  </div>
+  <div class="grid anim" style="grid-template-columns:1fr 1fr 1fr;margin-top:22px;gap:14px">
+  ${[["book","Aprendió leyendo","millones de libros, artículos, código y conversaciones"],["message-circle","Trabaja con lenguaje","instrucciones en palabras — no en código"],["target","No conoce todo","tiene una fecha de corte y puede equivocarse"]].map(c=>`<div style="background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow-sm)">${ic(c[0],'soft',14)}<div><div style="font-family:var(--fd);font-weight:700;font-size:14px;color:var(--navy)">${c[1]}</div><div style="font-size:12.5px;color:var(--gray);margin-top:2px">${c[2]}</div></div></div>`).join("")}
+  </div>
+  ${footer("Bloque 2")}
+</div></div>`);
+
+/* 4.5 · Qué es un Agente */
+slides.push(`<div class="slide bg-tint"><div class="pad">
+  ${titlebar("Qué es un Agente","Un LLM que además de responder — puede USAR herramientas")}
+  <div style="display:flex;gap:24px;margin-top:18px;flex:1;align-items:center">
+    <div class="anim imgwrap" style="flex:1.1;height:420px;padding:16px"><img src="assets/agente_diagrama.png" alt="Diagrama de un agente"></div>
+    <div class="anim" style="flex:1;display:flex;flex-direction:column;gap:12px">
+      <div style="background:linear-gradient(160deg,var(--navy),#0a5390);border-radius:14px;padding:20px;color:#fff;box-shadow:var(--shadow-sm)">
+        ${ic('bot','blue',20)}
+        <div style="font-family:var(--fd);font-weight:800;font-size:20px;color:#fff;margin-top:12px;line-height:1.3">LLM + herramientas + memoria + capacidad de decidir.</div>
+        <p style="color:#d6ebf8;font-size:13.5px;margin-top:10px;line-height:1.5">No solo responde. Puede leer archivos, navegar la web, ejecutar acciones y decidir qué hacer para lograr un objetivo.</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow-sm)">${ic('message-circle','soft',13)}<div><div style="font-family:var(--fd);font-weight:700;font-size:13.5px;color:var(--navy)">Chat</div><div style="font-size:11.5px;color:var(--gray)">responde a lo que le preguntas</div></div></div>
+      <div style="background:#fff;border:1px solid var(--blue);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow-sm)">${ic('bot','blue',13)}<div><div style="font-family:var(--fd);font-weight:700;font-size:13.5px;color:var(--blue)">Agente</div><div style="font-size:11.5px;color:var(--gray)">además <b>actúa</b> para lograr algo</div></div></div>
+    </div>
+  </div>
+  <p class="anim" style="text-align:center;font-family:var(--fd);font-style:italic;font-weight:700;color:var(--navy);font-size:14px;margin-top:12px">Claude Cowork — que veremos más tarde — es un agente en acción.</p>
+  ${footer("Bloque 2")}
+</div></div>`);
+
+/* 5 · Tokens y contexto */
+slides.push(`<div class="slide bg-tint"><div class="pad">
+  ${titlebar("Tokens y contexto","La IA no lee frases enteras — las descompone en pedacitos")}
+  <div style="display:flex;gap:24px;margin-top:20px;flex:1;align-items:stretch">
+    <div class="anim" style="flex:1;background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:var(--shadow-sm)">
+      <div style="display:flex;align-items:center;gap:12px">${ic('scissors','navy',16)}<span style="font-family:var(--fd);font-weight:800;font-size:20px;color:var(--navy)">Token</span></div>
+      <p style="margin-top:12px;font-size:14.5px;color:var(--gray);line-height:1.55">Un pedacito de texto — normalmente unas <b style="color:var(--navy)">3-4 letras</b>.</p>
+      <div style="margin-top:14px;padding:14px;background:var(--tint);border-radius:10px;font-family:var(--fc);font-size:14px;color:var(--navy)">"Contraction" → <b>[Con] [trac] [tion]</b></div>
+      <p style="margin-top:10px;font-size:12.5px;color:var(--gray);font-style:italic">Los precios y los límites se miden en tokens, no en palabras.</p>
+    </div>
+    <div class="anim" style="flex:1.1;background:linear-gradient(160deg,var(--navy),#0a5390);border-radius:16px;padding:24px;color:#fff;box-shadow:var(--shadow-sm)">
+      <div style="display:flex;align-items:center;gap:12px">${ic('layers','blue',16)}<span style="font-family:var(--fd);font-weight:800;font-size:20px">Contexto</span></div>
+      <p style="margin-top:12px;font-size:14.5px;color:#d6ebf8;line-height:1.55">Todo lo que Claude tiene en su "memoria de trabajo" durante una conversación: tu prompt, sus respuestas, los archivos que le pasaste.</p>
+      <p style="margin-top:12px;font-size:14.5px;color:#d6ebf8;line-height:1.55">Cuanto más contexto le des, <b style="color:var(--blue-l)">mejor entiende</b> lo que quieres.</p>
+    </div>
+  </div>
+  ${footer("Bloque 2")}
+</div></div>`);
+
+/* 6 · Qué es Claude */
+slides.push(`<div class="slide bg-light"><div class="pad">
+  ${titlebar("Qué es Claude","La IA de Anthropic — nuestra herramienta principal del día")}
+  <div style="display:flex;gap:26px;margin-top:22px;flex:1;align-items:stretch">
+    <div class="anim" style="flex:0 0 220px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:var(--shadow-sm)">
+      <img src="assets/logo_anthropic.png" alt="Anthropic" style="height:60px;max-width:100%;object-fit:contain">
+      <div style="font-family:var(--fd);font-weight:800;font-size:20px;color:var(--navy);margin-top:16px">Claude</div>
+      <div style="font-size:12px;color:var(--gray);margin-top:4px">creado por Anthropic</div>
+    </div>
+    <div class="anim" style="flex:1;display:flex;flex-direction:column;gap:12px;justify-content:center">
+    ${[["shield-check","Diseñado para ser útil, inofensivo y honesto"],["file-text","Excelente con documentos largos y análisis"],["message-square","Escribe en un tono natural, no robótico"],["users","Uno de los favoritos para trabajo profesional serio"]].map(c=>`<div style="display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow-sm)">${ic(c[0],'blue',14)}<span style="font-family:var(--fd);font-weight:600;font-size:14.5px;color:var(--ink)">${c[1]}</span></div>`).join("")}
+    </div>
+  </div>
+  ${footer("Bloque 2")}
+</div></div>`);
+
+/* 7 · ChatGPT vs Claude vs Gemini (usa empresas_ia_logos.png u otros logos) */
+slides.push(`<div class="slide bg-tint"><div class="pad">
+  ${titlebar("ChatGPT vs Claude vs Gemini","Los tres grandes — cada uno con su fortaleza")}
+  <div class="grid anim" style="grid-template-columns:1fr 1fr 1fr;margin-top:22px;gap:16px;flex:1;align-items:stretch">
+  ${[
+    ["logo_openai.png","ChatGPT","OpenAI","Velocidad · uso general · exploración creativa","zap"],
+    ["logo_anthropic.png","Claude","Anthropic","Análisis · documentos · escritura · razonamiento · trabajo profundo","brain"],
+    ["logo_google.png","Gemini","Google","Ecosistema Google · multimodalidad · búsqueda","globe"]
+  ].map((c,i)=>`<div style="background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;display:flex;flex-direction:column;box-shadow:${i===1?'var(--shadow)':'var(--shadow-sm)'};${i===1?'border:2px solid var(--blue);':''}">
+     <div style="display:flex;align-items:center;gap:14px"><img src="assets/${c[0]}" alt="" style="height:32px;max-width:120px;object-fit:contain"></div>
+     <div style="font-family:var(--fd);font-weight:800;font-size:22px;color:${i===1?'var(--blue)':'var(--navy)'};margin-top:14px">${c[1]}</div>
+     <div style="font-size:11.5px;color:var(--gray);letter-spacing:1.5px;text-transform:uppercase;font-weight:700">${c[2]}</div>
+     <p style="font-size:13.5px;color:var(--gray);margin-top:12px;line-height:1.5">${c[3]}</p>
+  </div>`).join("")}
+  </div>
+  <p class="anim" style="text-align:center;font-family:var(--fd);font-style:italic;font-weight:700;color:var(--navy);font-size:14.5px;margin-top:14px">Hoy nos enfocamos en Claude — pero el aprendizaje aplica a las tres.</p>
+  ${footer("Bloque 2")}
+</div></div>`);
+
+/* 7.5 · Qué modelo uso — comparativa + effort */
+slides.push(`<div class="slide bg-light"><div class="pad">
+  ${titlebar("Qué modelo uso","Claude no es un modelo — son cuatro")}
+  <div class="anim" style="margin-top:18px;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow-sm);background:#fff">
+    <div style="display:grid;grid-template-columns:1.25fr 1fr 1.75fr .5fr;gap:14px;background:var(--navy);color:#fff;font-family:var(--fb);font-weight:700;font-size:11px;letter-spacing:1.6px;text-transform:uppercase;padding:11px 18px">
+      <div>Modelo</div><div>Qué es</div><div>Cuándo usarlo</div><div style="text-align:right">Costo</div>
+    </div>
+    ${[
+      ["Haiku","El rápido","Preguntas simples, resúmenes cortos, respuestas al toque","$","#8fb8d4",false],
+      ["Sonnet 5","El de todos los días","Correos, análisis, reportes — el 80% de tu trabajo","$$","#0090C0",true],
+      ["Opus 5","El potente","Análisis profundo, tareas largas, decisiones que importan","$$$","#003C78",false],
+      ["Fable 5","El de frontera","Lo más difícil — cuando ningún otro alcanza","$$$$","#F2A23C",false]
+    ].map((r,i)=>`<div style="display:grid;grid-template-columns:1.25fr 1fr 1.75fr .5fr;gap:14px;padding:15px 18px;align-items:center;${i<3?'border-bottom:1px solid var(--line);':''}${r[5]?'background:var(--tint);':''}">
+      <div style="display:flex;align-items:center;gap:9px"><span style="width:9px;height:9px;border-radius:50%;background:${r[4]};flex:none"></span><span style="font-family:var(--fd);font-weight:800;font-size:17px;color:var(--navy)">${r[0]}</span>${r[5]?'<span style="font-size:9px;font-weight:800;letter-spacing:.8px;background:var(--blue);color:#fff;padding:3px 7px;border-radius:20px;white-space:nowrap">EMPIEZA AQUÍ</span>':''}</div>
+      <div style="font-family:var(--fd);font-weight:600;font-size:13.5px;color:var(--ink)">${r[1]}</div>
+      <div style="font-size:13px;color:var(--gray);line-height:1.4">${r[2]}</div>
+      <div style="text-align:right;font-family:var(--fc);font-weight:600;font-size:14px;color:var(--navy)">${r[3]}</div>
+    </div>`).join("")}
+  </div>
+  <div class="anim" style="margin-top:16px;background:linear-gradient(160deg,var(--navy),#0a5390);border-radius:14px;padding:16px 20px;color:#fff;box-shadow:var(--shadow-sm)">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">${ic('gauge','blue',14)}<div><span style="font-family:var(--fd);font-weight:800;font-size:16px">El effort</span><span style="color:#bcd6ec;font-size:13px"> — cuánto piensa el modelo antes de responder. Más effort = mejor respuesta, pero más lento y más caro.</span></div></div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px">
+    ${[["low","Tareas simples, alto volumen"],["medium","Equilibrio costo / velocidad"],["high","Por defecto — trabajo complejo"],["xhigh","Tareas largas de 30+ min"],["max","Sin límites — máxima profundidad"]].map((e,i)=>`<div style="background:rgba(255,255,255,${i===2?'.18':'.08'});border:1px solid rgba(255,255,255,${i===2?'.55':'.16'});border-radius:10px;padding:10px 11px">
+      <div style="font-family:var(--fc);font-weight:600;font-size:13px;color:${i===2?'#fff':'var(--blue-l)'}">${e[0]}</div>
+      <div style="font-size:10.5px;color:#bcd6ec;margin-top:3px;line-height:1.35">${e[1]}</div>
+    </div>`).join("")}
+    </div>
+  </div>
+  <p class="anim" style="text-align:center;font-family:var(--fd);font-style:italic;font-weight:700;color:var(--navy);font-size:14.5px;margin-top:14px">Regla simple: empieza en Sonnet. Sube a Opus solo cuando la tarea lo pida.</p>
+  ${footer("Bloque 2")}
+</div></div>`);
+
+/* 7.6 · Los modelos se actualizan (genérica) */
+slides.push(`<div class="slide bg-dark"><div class="pad" style="justify-content:center">
+  <div class="kicker anim"><span class="bar"></span>Algo que no para</div>
+  <h1 class="title anim" style="font-size:56px;margin-top:12px;max-width:22ch;line-height:1.08">Los modelos se actualizan <span style="color:var(--blue-l)">cada pocos meses.</span></h1>
+  <p class="lead anim" style="font-size:18px;margin-top:12px;max-width:72ch">Lo que hoy no sale bien, quizá salga en la próxima versión. Por eso importa más aprender a trabajar con IA que memorizar una herramienta.</p>
+  <div class="grid anim" style="grid-template-columns:repeat(4,1fr);margin-top:26px;gap:16px">
+  ${[
+    ["Mejores","razonan mejor y cometen menos errores en tareas largas","trending-up"],
+    ["Más rápidos","la misma respuesta, en menos tiempo","zap"],
+    ["Más baratos","lo que ayer era caro, hoy es de uso diario","wallet"],
+    ["Más control","effort y modos para ajustar profundidad vs. costo","gauge"]
+  ].map(c=>`<div style="background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:20px 20px 22px">${ic(c[2],'ghost',17)}<div style="font-family:var(--fd);font-weight:800;font-size:26px;color:#fff;margin-top:14px;line-height:1.1">${c[0]}</div><p style="color:#bcd6ec;font-size:13px;margin-top:10px;line-height:1.45">${c[1]}</p></div>`).join("")}
+  </div>
+  <div class="anim" style="margin-top:22px;background:rgba(255,255,255,.07);border-left:3px solid var(--amber);border-radius:0 12px 12px 0;padding:16px 22px;max-width:940px">
+    <p style="color:#d6ebf8;font-size:14.5px;line-height:1.5"><b style="color:var(--amber)">Y aun así</b> — todos tienen fecha de corte y pueden alucinar. Un modelo mejor no elimina el trabajo del humano: lo hace más valioso.</p>
+  </div>
+  ${brand()}
+</div></div>`);
+
+/* 8 · Alucinaciones */
+slides.push(`<div class="slide bg-dark"><div class="pad" style="justify-content:center">
+  <div class="kicker anim"><span class="bar"></span>El riesgo principal</div>
+  <h1 class="title anim" style="font-size:52px;margin-top:16px;max-width:22ch;line-height:1.1">Las <span style="color:var(--amber)">alucinaciones.</span></h1>
+  <p class="lead anim" style="font-size:19px;margin-top:14px;max-width:66ch">A veces la IA responde con seguridad — <b style="color:#fff">y se equivoca</b>. Inventa nombres, cifras, fechas o citas que no existen. Cuando no sabe, a veces adivina.</p>
+  <div class="anim" style="margin-top:20px;display:flex;gap:16px;max-width:1040px;align-items:stretch">
+    <div style="flex:1.2;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:18px 22px">
+      <div style="display:flex;align-items:center;gap:10px">${ic('alert-triangle','amber',14)}<span style="font-family:var(--fd);font-weight:800;font-size:15px;color:#fff">Ejemplo en izaje</span></div>
+      <p style="color:#d6ebf8;font-size:14.5px;line-height:1.55;margin-top:10px">«¿Cuánto levanta una grúa de 90 t a 18 m de radio?» → Claude puede <b style="color:var(--amber)">inventar una tabla de carga</b> completa, con total seguridad. Se ve impecable. Puede estar mal.</p>
+    </div>
+    <div style="flex:1;background:linear-gradient(135deg,var(--blue),var(--blue-l));border-radius:14px;padding:18px 22px;color:#fff">
+      <div style="display:flex;align-items:center;gap:10px">${ic('shield-check','ghost',14)}<span style="font-family:var(--fd);font-weight:800;font-size:15px">La lección</span></div>
+      <p style="font-size:14.5px;line-height:1.55;margin-top:10px">En izaje mandan <b>la tabla de carga del fabricante</b> y <b>el supervisor de izaje</b>. La IA ayuda a detectar omisiones — no decide capacidades.</p>
+    </div>
+  </div>
+  ${brand()}
+</div></div>`);
+
+/* 8.5 · Fecha de entrenamiento + Web/Deep Research */
+slides.push(`<div class="slide bg-light"><div class="pad">
+  ${titlebar("La IA tiene fecha de entrenamiento","Por eso alucina — y por eso también existe la solución")}
+  <div style="display:flex;gap:22px;margin-top:14px;flex:1;align-items:stretch">
+    <div class="anim imgwrap" style="flex:1.1;padding:10px;background:#0f0f10;border-radius:16px;display:flex;align-items:center;justify-content:center">
+      <img src="assets/claude_training_cutoff.png" alt="Claude respondiendo sobre su fecha de corte" style="width:100%;height:auto;max-height:520px;object-fit:contain;display:block">
+    </div>
+    <div class="anim" style="flex:1;display:flex;flex-direction:column;gap:12px;justify-content:center">
+      <div style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow-sm)">
+        <div style="display:flex;align-items:center;gap:10px">${ic('calendar-clock','soft',15)}<span style="font-family:var(--fd);font-weight:800;font-size:17px;color:var(--navy)">Fecha de corte</span></div>
+        <p style="color:var(--gray);font-size:13.5px;margin-top:8px;line-height:1.55">Cada modelo aprende hasta un mes específico. Todo lo que pasó después — no lo sabe. Si lo obligas a responder, <b style="color:var(--navy)">inventa</b>.</p>
+      </div>
+      <div style="background:linear-gradient(160deg,var(--navy),#0a5390);border-radius:14px;padding:18px 20px;color:#fff;box-shadow:var(--shadow-sm)">
+        <div style="display:flex;align-items:center;gap:10px">${ic('globe','blue',15)}<span style="font-family:var(--fd);font-weight:800;font-size:17px">Web Research</span></div>
+        <p style="color:#d6ebf8;font-size:13.5px;margin-top:8px;line-height:1.55">Claude busca en la web en tiempo real. Ej.: <b style="color:#fff">el tipo de cambio de hoy</b> para cotizar en soles, pesos chilenos y dólares. Sin búsqueda, puede darte uno viejo.</p>
+      </div>
+      <div style="background:linear-gradient(160deg,#0a5390,var(--blue));border-radius:14px;padding:18px 20px;color:#fff;box-shadow:var(--shadow-sm)">
+        <div style="display:flex;align-items:center;gap:10px">${ic('telescope','ghost',15)}<span style="font-family:var(--fd);font-weight:800;font-size:17px">Deep Research</span></div>
+        <p style="color:#d6ebf8;font-size:13.5px;margin-top:8px;line-height:1.55">Investigación profunda con múltiples fuentes, comparación y síntesis. Para reportes, benchmarks y decisiones importantes.</p>
+      </div>
+    </div>
+  </div>
+  <p class="anim" style="text-align:center;font-family:var(--fd);font-style:italic;font-weight:700;color:var(--navy);font-size:14px;margin-top:12px">Regla: si el dato puede haber cambiado — activa Research. Es la mejor defensa contra las alucinaciones.</p>
+  ${footer("Fecha de corte")}
+</div></div>`);
+
+/* 9 · Regla práctica */
+slides.push(`<div class="slide bg-dark2"><div class="pad" style="justify-content:center">
+  <div class="kicker anim"><span class="bar"></span>Regla práctica del día</div>
+  <h1 class="title anim" style="font-size:52px;margin-top:14px;max-width:26ch;line-height:1.15">La IA ayuda.</h1>
+  <h1 class="title anim" style="font-size:52px;margin-top:4px;max-width:26ch;line-height:1.15"><span style="color:var(--blue-l)">El humano valida.</span></h1>
+  <p class="lead anim" style="font-size:19px;margin-top:22px;max-width:60ch">Nunca es "IA reemplaza". Siempre es "IA + humano". Esa es la ecuación de todo lo que veremos hoy.</p>
+  ${brand()}
+</div></div>`);
+
+const stage=document.getElementById('stage');stage.innerHTML=slides.join("");
+const els=[...stage.querySelectorAll('.slide')];document.getElementById('total').textContent=els.length;let idx=0;
+function show(n){n=Math.max(0,Math.min(els.length-1,n));els.forEach((s,i)=>s.classList.toggle('active',i===n));idx=n;document.getElementById('cur').textContent=n+1;document.getElementById('progress').style.width=((n+1)/els.length*100)+'%';els[n].querySelectorAll('.anim').forEach((el,k)=>el.style.transitionDelay=(0.04+k*0.05)+'s');if(window.lucide)lucide.createIcons()}
+document.getElementById('next').onclick=()=>show(idx+1);document.getElementById('prev').onclick=()=>show(idx-1);
+document.addEventListener('keydown',e=>{if(['ArrowRight',' ','PageDown','Enter'].includes(e.key)){e.preventDefault();show(idx+1)}else if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(idx-1)}else if(e.key==='Home')show(0);else if(e.key==='End')show(els.length-1);else if(e.key.toLowerCase()==='f'){if(!document.fullscreenElement)document.documentElement.requestFullscreen();else document.exitFullscreen()}});
+stage.addEventListener('click',e=>{if(e.clientX>window.innerWidth*0.5)show(idx+1);else show(idx-1)});
+function fit(){document.getElementById('deck').style.transform=`scale(${Math.min(window.innerWidth/1280,window.innerHeight/720)})`}
+window.addEventListener('resize',fit);fit();if(window.lucide)lucide.createIcons();show(0);
+</script></body></html>

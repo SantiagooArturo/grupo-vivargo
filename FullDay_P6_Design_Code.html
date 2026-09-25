@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>FullDay P6 — Claude Design + Claude Code · MyWorkIn × Grupo Vivargo</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@1,500;1,600;1,700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{--navy:#003C78;--blue:#0090C0;--blue-l:#57B6DD;--tint:#EAF3FA;--ink:#132a47;--gray:#5B6B7B;--line:#dbe6ef;--amber:#F2A23C;--shadow:0 18px 40px -18px rgba(2,30,60,.45);--shadow-sm:0 8px 22px -12px rgba(2,30,60,.35);--fd:'Sora',sans-serif;--fb:'Inter',sans-serif;--fc:'JetBrains Mono',monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#05101f;font-family:var(--fb);-webkit-font-smoothing:antialiased;overflow:hidden}
+.viewport{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 30%,#0a1f3a,#05101f 75%)}
+.deck{position:relative;transform-origin:center center}
+.stage{position:relative;width:1280px;height:720px;border-radius:18px;overflow:hidden;box-shadow:0 40px 120px -30px rgba(0,0,0,.8)}
+.slide{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .55s ease,transform .55s ease;transform:scale(1.02);overflow:hidden}
+.slide.active{opacity:1;visibility:visible;transform:scale(1)}
+.pad{position:absolute;inset:0;padding:64px 72px;display:flex;flex-direction:column}
+.bg-light{background:radial-gradient(1200px 500px at 88% -10%,rgba(0,144,192,.10),transparent 60%),linear-gradient(180deg,#fff,#f3f8fc)}
+.bg-tint{background:radial-gradient(900px 500px at 90% 110%,rgba(0,144,192,.10),transparent 60%),linear-gradient(180deg,#f6fafd,#eef5fb)}
+.bg-dark{background:radial-gradient(900px 600px at 82% 8%,rgba(87,182,221,.30),transparent 55%),radial-gradient(700px 500px at 10% 100%,rgba(0,144,192,.22),transparent 60%),linear-gradient(135deg,#01244a,#003C78 58%,#0a5390)}
+.bg-dark2{background:radial-gradient(800px 600px at 85% 12%,rgba(87,182,221,.22),transparent 55%),linear-gradient(150deg,#01182f,#012a52 70%)}
+.kicker{font-family:var(--fb);font-weight:700;font-size:14px;letter-spacing:3px;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:10px}
+.bg-dark .kicker,.bg-dark2 .kicker{color:var(--blue-l)}
+.kicker .bar{width:34px;height:3px;border-radius:3px;background:currentColor}
+h1.title{font-family:var(--fd);font-weight:800;color:var(--navy);font-size:42px;line-height:1.08;letter-spacing:-.5px;margin-top:14px}
+.bg-dark h1.title,.bg-dark2 h1.title{color:#fff}
+.lead{font-size:18px;color:var(--gray);margin-top:12px;max-width:62ch;line-height:1.5}
+.bg-dark .lead,.bg-dark2 .lead{color:#bcd6ec}
+.logo{height:40px}.logo.white{filter:brightness(0) invert(1)}
+.brandmark{position:absolute;right:60px;bottom:34px;height:30px;opacity:.95}.brandmark.cobrand{display:flex;align-items:center;gap:14px}.brandmark.cobrand img{height:26px;width:auto}.cb-sep{width:1px;height:22px;background:rgba(255,255,255,.35)}.logo-plate{align-items:center;gap:18px;align-self:flex-start}.logo-plate .vv{filter:brightness(0)}.logo-plate .cb-sep{background:#d5dbe2;height:34px}
+.footer{position:absolute;left:72px;right:72px;bottom:26px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--gray);border-top:1px solid var(--line);padding-top:10px}
+.footer .sec{color:var(--blue);font-weight:700}
+.bg-dark .footer,.bg-dark2 .footer{border-color:rgba(255,255,255,.14);color:#9fc0dc}.bg-dark .footer .sec,.bg-dark2 .footer .sec{color:var(--blue-l)}
+.grid{display:grid;gap:18px}
+.ic{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;flex:none}.ic svg{stroke-width:2.1}
+.ic.navy{background:var(--navy);color:#fff}.ic.blue{background:linear-gradient(135deg,var(--blue),var(--blue-l));color:#fff}.ic.amber{background:linear-gradient(135deg,var(--amber),#f6bd78);color:#fff}.ic.soft{background:var(--tint);color:var(--navy)}
+.imgwrap{border-radius:16px;overflow:hidden;box-shadow:var(--shadow);background:#fff}
+.imgwrap img{width:100%;height:100%;object-fit:contain;display:block}
+.codeblock{background:#0b1a30;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:20px 22px;font-family:var(--fc);font-size:13.5px;color:#e6f2fb;line-height:1.55;box-shadow:var(--shadow)}
+.codeblock .k{color:var(--blue-l);font-weight:600}.codeblock .c{color:#93a7bd;font-style:italic}.codeblock .h{background:rgba(87,182,221,.14);padding:2px 6px;border-radius:5px}
+.codehead{display:flex;align-items:center;gap:8px;font-size:11px;color:#7fa1c0;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;font-family:var(--fb);font-weight:700}
+.codehead .dot{width:9px;height:9px;border-radius:50%}.codehead .dot.r{background:#ff5f56}.codehead .dot.y{background:#ffbd2e}.codehead .dot.g{background:#27c93f}
+.slide .anim{opacity:0;transform:translateY(22px);transition:opacity .6s cubic-bezier(.2,.7,.3,1),transform .6s cubic-bezier(.2,.7,.3,1)}
+.slide.active .anim{opacity:1;transform:none}
+.ctl{position:fixed;z-index:50;display:flex;align-items:center;gap:14px;bottom:22px;left:50%;transform:translateX(-50%);background:rgba(6,18,34,.66);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.12);padding:8px 14px;border-radius:999px;color:#cfe0ee;font-size:13px;font-weight:600}
+.ctl button{all:unset;cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:50%;color:#dbe9f6}.ctl button:hover{background:rgba(255,255,255,.12)}
+.progress{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,var(--blue),var(--blue-l));z-index:60;transition:width .4s ease}
+.hint{position:fixed;top:14px;right:16px;z-index:50;color:#7f9bb5;font-size:12px}
+</style></head>
+<body>
+<div class="progress" id="progress"></div><div class="hint">← → · F pantalla completa</div>
+<div class="viewport"><div class="deck" id="deck"><div class="stage" id="stage"></div></div></div>
+<div class="ctl"><button id="prev"><i data-lucide="chevron-left"></i></button><span><span id="cur">1</span> / <span id="total">1</span></span><button id="next"><i data-lucide="chevron-right"></i></button></div>
+<script>
+const LOGO="logo_myworkin.png";const LOGO_VV="media/logo_vivargo.svg";const SEC="FullDay · Claude e IA para el trabajo · Grupo Vivargo";
+function ic(n,c,s=22){return `<span class="ic ${c}" style="width:${s+22}px;height:${s+22}px"><i data-lucide="${n}" style="width:${s}px;height:${s}px"></i></span>`}
+function footer(t){return `<div class="footer anim"><span>${SEC}</span><span class="sec">${t}</span></div>`}
+function titlebar(k,t){return `<div class="titlebar anim"><div class="kicker"><span class="bar"></span>${k}</div><h1 class="title">${t}</h1></div>`}
+function brand(){return `<span class="brandmark cobrand"><img src="${LOGO}" class="logo white" alt="MyWorkIn"><span class="cb-sep"></span><img src="${LOGO_VV}" class="logo vv" alt="Grupo Vivargo"></span>`}
+function code(h,b){return `<div class="codeblock anim"><div class="codehead"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span>${h}</span></div>${b}</div>`}
+const slides=[];
+
+/* 1 · Cover */
+slides.push(`<div class="slide bg-dark"><div class="pad">
+  <div class="kicker anim"><span class="bar"></span>FullDay · Bloque 6</div>
+  <h1 class="title anim" style="font-size:70px;margin-top:14px;max-width:22ch">Claude Design + Claude Code</h1>
+  <p class="lead anim" style="font-size:22px;margin-top:16px">Claude ya no solo responde — <b style="color:var(--blue-l)">también crea entregables visuales</b> y <b style="color:var(--blue-l)">herramientas simples</b>.</p>
+  <div class="anim" style="margin-top:20px;color:#9fc4de;font-size:14px">40 minutos</div>
+  ${brand()}
+</div></div>`);
+
+/* 2 · Claude ya no solo responde */
+slides.push(`<div class="slide bg-light"><div class="pad" style="justify-content:center">
+  <h1 class="title anim" style="font-size:60px;max-width:22ch;line-height:1.1">Claude ya no solo responde.</h1>
+  <h1 class="title anim" style="font-size:60px;max-width:22ch;line-height:1.1;margin-top:6px"><span style="color:var(--blue)">Ahora también crea.</span></h1>
+  <div class="anim" style="margin-top:32px;display:flex;gap:22px">
+    <div style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 26px;box-shadow:var(--shadow-sm);display:flex;align-items:center;gap:14px">${ic('palette','blue',18)}<span style="font-family:var(--fd);font-weight:800;font-size:20px;color:var(--navy)">Design</span><span style="color:var(--gray);font-size:14px">entregables visuales</span></div>
+    <div style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 26px;box-shadow:var(--shadow-sm);display:flex;align-items:center;gap:14px">${ic('code-2','blue',18)}<span style="font-family:var(--fd);font-weight:800;font-size:20px;color:var(--navy)">Code</span><span style="color:var(--gray);font-size:14px">herramientas simples</span></div>
+  </div>
+  ${footer("Bloque 6")}
+</div></div>`);
+
+/* 3 · PARTE A · Claude Design */
+slides.push(`<div class="slide bg-dark2"><div class="pad" style="justify-content:center">
+  <div class="kicker anim"><span class="bar"></span>Parte A</div>
+  ${ic('palette','blue',30)}
+  <h1 class="title anim" style="font-size:60px;margin-top:20px;max-width:22ch;line-height:1.1">Claude Design</h1>
+  <p class="lead anim" style="font-size:20px;margin-top:14px;max-width:60ch">De conversación a <b style="color:var(--blue-l)">entregable visual</b> — sin abrir PowerPoint ni Illustrator.</p>
+  ${brand()}
+</div></div>`);
+
+/* 3.5 · Design System — lo más importante si trabajas en empresa */
+slides.push(`<div class="slide bg-light"><div class="pad">
+  ${titlebar("Lo más importante · Design System","Si trabajas en una empresa — esto lo cambia todo")}
+  <p class="lead anim" style="margin-top:4px">Design de verdad brilla cuando trabaja <b>dentro de tu marca</b> — no cuando inventa una cada vez.</p>
+  <div style="display:flex;gap:22px;margin-top:20px;flex:1;align-items:stretch">
+    <div class="anim" style="flex:1;background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;gap:12px">${ic('layers','soft',16)}<span style="font-family:var(--fd);font-weight:800;font-size:20px;color:var(--navy)">Qué es un Design System</span></div>
+      <p style="color:var(--gray);font-size:14px;margin-top:10px;line-height:1.55">Un conjunto de <b style="color:var(--navy)">reglas visuales</b> que definen cómo se ve tu marca — para que TODO lo que produzcan tú y tu equipo se sienta parte de la misma familia.</p>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:14px">
+      ${[["type","Tipografía","fuentes principal y secundaria"],["palette","Colores","paleta primaria + secundaria"],["shapes","Estilos","botones, cards, íconos, espaciados"],["image","Logos y assets","cómo se usan, cuándo, dónde"]].map(c=>`<div style="display:flex;align-items:center;gap:11px;background:var(--tint);border-radius:10px;padding:9px 13px"><i data-lucide="${c[0]}" style="width:14px;height:14px;color:var(--blue)"></i><span style="font-family:var(--fd);font-weight:700;font-size:13.5px;color:var(--navy);min-width:100px">${c[1]}</span><span style="font-size:12px;color:var(--gray)">${c[2]}</span></div>`).join("")}
+      </div>
+    </div>
+    <div class="anim" style="flex:1;background:linear-gradient(160deg,var(--navy),#0a5390);border-radius:16px;padding:24px;color:#fff;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;justify-content:center">
+      <div style="display:flex;align-items:center;gap:12px"><img src="media/logo_vivargo.svg" style="height:30px;width:auto" alt="Grupo Vivargo"><span style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#9fc4de;border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:3px 9px">Ejemplo</span></div>
+      <div style="font-family:var(--fd);font-weight:800;font-size:22px;color:#fff;margin-top:14px;line-height:1.3">Le pasas tu Design System <span style="color:var(--blue-l)">una vez</span> — y Claude respeta tu marca <span style="color:var(--blue-l)">siempre.</span></div>
+      <p style="color:#d6ebf8;font-size:14px;margin-top:12px;line-height:1.55">Con <b style="color:var(--blue-l)">los colores y el logo de Vivargo</b> cargados, cada ficha de equipo JLG, propuesta de alquiler o reporte de flota sale <b style="color:var(--blue-l)">consistente</b> — sin corregir tipografías y colores cada vez.</p>
+      <p style="color:#9fc4de;font-size:12.5px;margin-top:12px;font-style:italic;line-height:1.5">Súbelo como archivo en tu Project — y listo, todo respeta la línea gráfica de Vivargo.</p>
+    </div>
+  </div>
+  ${footer("Design System")}
+</div></div>`);
+
+/* 4 · Qué puedes crear (mockup one-pager Vivargo) */
+slides.push(`<div class="slide bg-light"><div class="pad">
+  ${titlebar("Qué puedes crear con Design","Documentos visuales listos para compartir")}
+  <div style="display:flex;gap:22px;margin-top:20px;flex:1;align-items:center">
+    <div class="anim" style="flex:1.1;height:420px;border-radius:16px;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--line);background:#fff;display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;gap:10px;background:#f4f1ec;border-bottom:1px solid var(--line);padding:8px 12px;font-size:11px;color:var(--gray)"><i data-lucide="palette" style="width:13px;height:13px;color:var(--blue)"></i><b style="color:var(--ink)">Claude Design</b><span>· One-pager flota Vivargo</span><span style="margin-left:auto;font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:#fff;border:1px solid var(--line);border-radius:999px;padding:2px 8px">Ejemplo · datos ficticios</span></div>
+      <div style="flex:1;background:#1d1f24;padding:16px;display:flex;justify-content:center">
+        <div style="width:100%;max-width:470px;border-radius:10px;overflow:hidden;background:radial-gradient(420px 260px at 90% 0%,rgba(87,182,221,.25),transparent 60%),linear-gradient(150deg,#0b1522,#14263b);color:#fff;padding:18px 20px;display:flex;flex-direction:column">
+          <div style="display:flex;justify-content:space-between;align-items:center"><img src="media/logo_vivargo.svg" style="height:20px;width:auto" alt="Grupo Vivargo"><span style="font-size:9px;color:#9fb3c8;font-weight:700;letter-spacing:1px">ALQUILER DE EQUIPOS · 2026</span></div>
+          <div style="font-family:var(--fd);font-weight:800;font-size:22px;line-height:1.12;margin-top:14px">Nuestra flota para<br>grandes desafíos</div>
+          <div style="font-size:10.5px;color:#b8c9da;margin-top:6px">Minería, energía y construcción · Perú, Chile, Estados Unidos y Ecuador</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:14px">
+          ${[["Grúas telescópicas","de 25 a 220 t"],["Grúas de celosía","proyectos largos"],["Camiones grúa","brazo articulado"],["Manlift JLG","telescópicos y articulados"],["Telehandlers JLG","manipulación en obra"],["Montacargas y cama baja","carga y transporte"]].map(c=>`<div style="border:1px solid rgba(255,255,255,.16);border-radius:8px;padding:9px 9px;background:rgba(255,255,255,.04)"><div style="font-family:var(--fd);font-weight:700;font-size:11px;line-height:1.2">${c[0]}</div><div style="font-size:9px;color:#9fb3c8;margin-top:3px">${c[1]}</div></div>`).join("")}
+          </div>
+          <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid rgba(255,255,255,.14);font-size:9.5px;color:#9fb3c8"><span>Con operador certificado · documentos para ingreso a mina</span><span style="font-weight:700;color:#fff">vivargo.com</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="anim" style="flex:1;display:flex;flex-direction:column;gap:10px">
+    ${[["file-image","Ficha comercial","de un equipo JLG en venta"],["layout","One-pager de la flota","toda la oferta de alquiler en una hoja"],["file-check","Propuesta de alquiler","equipo, alcance y cotización"],["bar-chart","Reporte mensual de flota","horas y disponibilidad para un cliente minero"],["presentation","Presentaciones","para el comité o una licitación"],["globe","Landing pages","de una campaña de equipos JLG"]].map(c=>`<div style="background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow-sm)">${ic(c[0],'blue',14)}<div><div style="font-family:var(--fd);font-weight:700;font-size:14px;color:var(--navy)">${c[1]}</div><div style="font-size:11.5px;color:var(--gray)">${c[2]}</div></div></div>`).join("")}
+    </div>
+  </div>
+  ${footer("Design")}
+</div></div>`);
+
+/* 4.5 · Caso real — carrusel con nuestro Design System */
+slides.push(`<div class="slide bg-tint"><div class="pad">
+  ${titlebar("Ejemplo · con el Design System de Vivargo","Un carrusel en la marca — sin diseñar desde cero")}
+  <div style="display:flex;gap:26px;margin-top:12px;flex:1;align-items:center">
+
+    <!-- IZQUIERDA · portada del carrusel recreada + filmstrip -->
+    <div class="anim" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center">
+      <div style="width:306px;height:382px;border-radius:16px;overflow:hidden;box-shadow:var(--shadow);position:relative;flex:none;background:radial-gradient(560px 380px at 82% 6%,rgba(87,182,221,.30),transparent 55%),linear-gradient(135deg,#01244a,#003C78 60%,#0a5390);color:#fff">
+        <div style="position:absolute;inset:0;padding:20px;display:flex;flex-direction:column">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <img src="media/logo_vivargo.svg" style="height:18px;width:auto" alt="Grupo Vivargo">
+            <span style="font-size:9px;font-weight:700;letter-spacing:1px;color:#8fb6d8">01 / 06</span>
+          </div>
+          <div style="margin-top:auto">
+            <div style="font-size:8.5px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;color:var(--blue-l)">Alquiler de equipos · Ejemplo</div>
+            <div style="font-family:var(--fd);font-weight:800;font-size:27px;line-height:1.06;margin-top:9px">Manlift JLG para<br>trabajo en <span style="font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:600;color:var(--blue-l);border-bottom:2px solid var(--blue-l);padding-bottom:1px">altura</span><br>en planta</div>
+            <div style="font-size:10.5px;color:#cfe3f4;margin-top:11px;line-height:1.45">Plataformas telescópicas y articuladas para mantenimiento y paradas de planta. Con operador certificado de Vivargo o con el tuyo acreditado.</div>
+            <div style="display:flex;gap:8px;margin-top:13px">
+              <span style="background:var(--blue-l);color:#01244a;border-radius:999px;padding:5px 12px;font-size:10px;font-weight:700">Con o sin operador</span>
+              <span style="border:1px solid rgba(255,255,255,.42);color:#fff;border-radius:999px;padding:5px 12px;font-size:10px;font-weight:600">Seguridad primero</span>
+            </div>
+          </div>
+          <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:center;padding-top:14px">
+            <span style="border:1px solid rgba(255,255,255,.32);border-radius:999px;padding:5px 12px;font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:10.5px;color:#dce9f5">soluciones para grandes desafíos</span>
+            <span style="font-size:10.5px;font-weight:600;color:#8fb6d8">Desliza →</span>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;gap:6px;margin-top:12px;justify-content:center">
+      ${[1,2,3,4,5,6].map(n=>`<div style="width:33px;height:42px;border-radius:5px;border:1px solid ${n===1?'var(--blue)':'var(--line)'};background:${n===1?'linear-gradient(135deg,#01244a,#0a5390)':'#fff'};position:relative;box-shadow:var(--shadow-sm)"><div style="position:absolute;top:4px;left:4px;right:9px;height:3px;border-radius:2px;background:${n===1?'rgba(255,255,255,.55)':'var(--blue-l)'}"></div><div style="position:absolute;bottom:3px;left:4px;font-size:7px;font-weight:800;color:${n===1?'#8fb6d8':'var(--gray)'}">0${n}</div></div>`).join("")}
+      </div>
+    </div>
+
+    <!-- DERECHA · por qué importa + prompt -->
+    <div class="anim" style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:11px">
+      <div style="font-family:var(--fd);font-weight:800;font-size:21px;color:var(--navy);line-height:1.22">100% en la marca de Vivargo — y sin abrir un editor de diseño</div>
+      ${[
+        ["check-circle","Los colores, la tipografía y el logo de Vivargo","el Design System aplicado en las 6 slides"],
+        ["zap","De un brief corto a carrusel publicable","en minutos, no en horas"],
+        ["share-2","Listo para LinkedIn y para el equipo comercial","mismo estilo, cero inconsistencias"]
+      ].map(c=>`<div style="display:flex;align-items:flex-start;gap:11px;background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 13px;box-shadow:var(--shadow-sm)"><i data-lucide="${c[0]}" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><div><div style="font-family:var(--fd);font-weight:700;font-size:13.5px;color:var(--navy);line-height:1.25">${c[1]}</div><div style="font-size:11.5px;color:var(--gray);margin-top:2px">${c[2]}</div></div></div>`).join("")}
+      ${code("Prompt · con el Design System de Vivargo",`Con el <span class="k h">Design System</span> de Vivargo, arma un <span class="k">carrusel de 6 slides</span>
+sobre el alquiler de manlift JLG para trabajo en altura en planta:
+<span class="c">portada · el problema · los equipos · con o sin operador · seguridad · CTA.</span>
+Respeta colores, tipografía y logo de la marca.`)}
+    </div>
+  </div>
+  ${footer("Ejemplo · Design")}
+</div></div>`);
+
+/* 5 · Demo Design — replicar una web desde link */
+slides.push(`<div class="slide bg-light"><div class="pad" style="padding:52px 60px">
+  ${titlebar("Demo · replicar una web desde un link","Le paso una URL — Claude Design reconstruye la web visualmente")}
+  <div class="anim" style="margin-top:10px;flex:1;display:flex;align-items:center">
+    <div class="codeblock" style="width:100%;font-size:11.5px;line-height:1.5;padding:16px 20px">
+      <div class="codehead"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span>Prompt · replicar desde link</span></div>
+      <div style="columns:2;column-gap:26px">
+        <div style="break-inside:avoid;margin-bottom:8px">Quiero que <span class="k">repliques visualmente</span> una página web a partir del enlace que te voy a proporcionar.</div>
+        <div style="break-inside:avoid;margin-bottom:8px"><span class="k">ENLACE:</span> https://vivargo.com/</div>
+        <div style="break-inside:avoid;margin-bottom:8px"><span class="k">OBJETIVO:</span> crear una versión local lo más parecida posible a la original — diseño, estructura, colores, tipografías, espaciados, jerarquía visual, componentes e interacciones básicas.</div>
+        <div style="break-inside:avoid;margin-bottom:8px"><span class="k">ALCANCE:</span>
+          <span class="c">
+          - Replica la página principal visible del enlace<br>
+          - Responsive: desktop y mobile<br>
+          - Reproduce nav, botones, cards, hero, footer<br>
+          - Si hay logos/imágenes externas → placeholders similares<br>
+          - Si no puedes acceder a un recurso → recréalo aproximado<br>
+          - Prioriza que se vea real, moderno y listo para demo</span>
+        </div>
+        <div style="break-inside:avoid;margin-bottom:8px"><span class="k">RESTRICCIONES:</span>
+          <span class="c">
+          - No copies código fuente privado ni evadas protecciones<br>
+          - No uses logos/marcas protegidos como propios<br>
+          - No inventes funcionalidades complejas<br>
+          - No hagas backend<br>
+          - No expliques demasiado — entrega el código funcional</span>
+        </div>
+        <div style="break-inside:avoid;margin-bottom:8px"><span class="k">ENTREGABLE:</span> web autocontenida lista para correr localmente. Preferencia: HTML + CSS + JS separados, o React + Tailwind si queda mejor.</div>
+        <div style="break-inside:avoid"><span class="k">CRITERIOS DE CALIDAD:</span>
+          <span class="c">
+          - Réplica visual profesional<br>
+          - Bien alineado; cuida spacing, sombras, bordes<br>
+          - Botones y enlaces pueden ser estáticos<br>
+          - Debe verse bien en pantalla completa y en móvil</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  ${footer("Demo · Design")}
+</div></div>`);
+
+/* 6 · Iterar diseño */
+slides.push(`<div class="slide bg-tint"><div class="pad">
+  ${titlebar("Cómo iterar un diseño","Cada mensaje afina el resultado")}
+  <div class="grid anim" style="grid-template-columns:1fr 1fr;margin-top:22px;gap:14px;flex:1;align-items:stretch">
+  ${[
+    ["arrow-down-narrow-wide","Reduce el texto","déjalo más ejecutivo"],
+    ["users","Hazlo más orientado a gerentes","cambia foco de audiencia"],
+    ["scale","Agrega antes vs. después","estructura comparativa"],
+    ["palette","Cambia paleta o tono","más cálido / más corporativo"],
+    ["move","Reordena secciones","'baja los beneficios abajo'"],
+    ["type","Ajusta jerarquía visual","'títulos más grandes'"]
+  ].map(c=>`<div style="background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:14px;box-shadow:var(--shadow-sm)">${ic(c[0],'blue',14)}<div><div style="font-family:var(--fd);font-weight:700;font-size:14.5px;color:var(--navy)">${c[1]}</div><div style="font-size:12.5px;color:var(--gray)">${c[2]}</div></div></div>`).join("")}
+  </div>
+  <p class="anim" style="text-align:center;font-family:var(--fd);font-style:italic;font-weight:700;color:var(--navy);font-size:14.5px;margin-top:14px">No pidas perfección de una. Pide diferencias específicas.</p>
+  ${footer("Iterar")}
+</div></div>`);
+
+/* 7 · PARTE B · Claude Code */
+slides.push(`<div class="slide bg-dark2"><div class="pad" style="justify-content:center">
+  <div class="kicker anim"><span class="bar"></span>Parte B</div>
+  ${ic('code-2','blue',30)}
+  <h1 class="title anim" style="font-size:60px;margin-top:20px;max-width:22ch;line-height:1.1">Claude Code</h1>
+  <p class="lead anim" style="font-size:20px;margin-top:14px;max-width:60ch">De idea a <b style="color:var(--blue-l)">herramienta</b> — sin ser programador.</p>
+  ${brand()}
+</div></div>`);
+
+/* 8 · El profesional que antes no podía */
+slides.push(`<div class="slide bg-light"><div class="pad">
+  ${titlebar("El profesional que antes no podía","Cosas que se quedaban en 'algún día' — ahora las prototipas esta tarde")}
+  <div style="display:flex;gap:22px;margin-top:14px;flex:1;align-items:stretch">
+    <div class="anim" style="flex:0.7;background:var(--tint);border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;justify-content:center">
+      <div style="font-family:var(--fd);font-weight:700;font-size:11px;color:var(--gray);letter-spacing:2px;text-transform:uppercase">Antes</div>
+      <p style="font-family:var(--fd);font-weight:800;font-size:19px;color:var(--gray);margin-top:10px;line-height:1.3">"Esto lo veré con IT — o con mi hermano dev — o con el sobrino."</p>
+      <p style="font-size:13px;color:var(--gray);margin-top:12px;line-height:1.5;font-style:italic">Y se quedaba en la lista de "algún día" durante meses.</p>
+    </div>
+    <div class="anim" style="flex:1.4;display:flex;flex-direction:column;gap:12px;justify-content:center">
+      <div style="font-family:var(--fd);font-weight:700;font-size:11px;color:var(--blue);letter-spacing:2px;text-transform:uppercase">Ahora · lo prototipo yo esta tarde</div>
+      <div class="grid" style="grid-template-columns:1fr 1fr;gap:11px">
+      ${[
+        ["calculator","Calculadora ROI","para justificar un proyecto en el comité"],
+        ["form-input","Formulario interno","para que el equipo capture datos con reglas"],
+        ["gauge","Dashboard rápido","de un Excel o de un archivo del día"],
+        ["shield-check","Validador","de RUCs, correos, formatos, requisitos"]
+      ].map(c=>`<div style="background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow-sm)">${ic(c[0],'blue',14)}<div><div style="font-family:var(--fd);font-weight:700;font-size:14px;color:var(--navy)">${c[1]}</div><div style="font-size:11.5px;color:var(--gray);margin-top:2px">${c[2]}</div></div></div>`).join("")}
+      </div>
+    </div>
+  </div>
+  <p class="anim" style="text-align:center;font-family:var(--fd);font-style:italic;font-weight:700;color:var(--navy);font-size:14.5px;margin-top:14px">Cosas simples que antes no valían el costo de pedir — ahora las tienes listas antes del almuerzo.</p>
+  ${footer("Code")}
+</div></div>`);
+
+/* 9 · Qué puede crear */
+slides.push(`<div class="slide bg-tint"><div class="pad">
+  ${titlebar("Qué puede crear una persona no técnica","Casos reales de uso en el día a día")}
+  <div class="grid anim" style="grid-template-columns:repeat(3,1fr);margin-top:22px;gap:14px;flex:1;align-items:stretch">
+  ${[
+    ["calculator","Calculadoras","ROI, ahorro, comisiones"],
+    ["shield-check","Validadores","checklists, requisitos"],
+    ["play-circle","Simuladores","escenarios, proyecciones"],
+    ["form-input","Formularios","con reglas simples"],
+    ["gauge","Dashboards básicos","de un archivo"],
+    ["file-text","Generadores internos","de propuestas o correos"]
+  ].map(c=>`<div style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;box-shadow:var(--shadow-sm)">${ic(c[0],'blue',14)}<div style="font-family:var(--fd);font-weight:700;font-size:15px;color:var(--navy);margin-top:10px">${c[1]}</div><div style="font-size:12.5px;color:var(--gray);margin-top:4px">${c[2]}</div></div>`).join("")}
+  </div>
+  ${footer("Code")}
+</div></div>`);
+
+/* 10 · Demo Code · hacer realidad el diseño de Claude Design */
+slides.push(`<div class="slide bg-light"><div class="pad">
+  ${titlebar("Demo · hacer realidad el diseño","Design maquetó la web — Code la construye funcional")}
+  <div class="anim" style="margin-top:14px;flex:1;display:flex;align-items:center">
+    ${code("Prompt · Claude Code",`<span style="display:block;white-space:pre-wrap;font-size:12.5px;line-height:1.42">Toma el <span class="k h">diseño</span> que armamos hace un momento con Claude Design
+(la réplica de vivargo.com que armamos desde el link).
+
+<span class="k">Construye la web real.</span>
+
+Requisitos:
+<span class="c">- HTML + CSS + JS en un solo archivo</span>
+<span class="c">- Fiel al diseño (layout, tipografía, colores, jerarquía)</span>
+<span class="c">- Responsive · se debe ver bien en móvil</span>
+<span class="c">- Botones con hover states</span>
+<span class="c">- Formulario "Solicita tu cotización" funcional (validación básica)</span>
+<span class="c">- Sección de "cómo funciona" con animación al hacer scroll</span>
+
+Extras:
+<span class="c">- Usa los colores y el logo de Vivargo del Design System</span>
+<span class="c">- Placeholder para imágenes con notas de qué debería ir</span>
+<span class="c">- Comentarios en el código explicando cada sección</span>
+
+<span class="k">Cuando termines</span> — muéstrame la web funcionando
+para que la revise antes de compartirla con el equipo.</span>`)}
+  </div>
+  ${footer("Demo · Code")}
+</div></div>`);
+
+/* 10.5 · Demo — propuesta comercial entregada como web */
+slides.push(`<div class="slide bg-tint"><div class="pad">
+  ${titlebar("Demo · ejemplo con datos ficticios","Una propuesta de alquiler — como página web")}
+  <div style="display:flex;gap:24px;margin-top:12px;flex:1;align-items:center">
+
+    <!-- IZQUIERDA · mockup de navegador con la propuesta recreada -->
+    <div class="anim" style="flex:1.35;border-radius:14px;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--line);background:#fff">
+      <div style="display:flex;align-items:center;gap:10px;background:#eef3f8;border-bottom:1px solid var(--line);padding:9px 12px">
+        <span style="display:flex;gap:5px"><span style="width:9px;height:9px;border-radius:50%;background:#ff5f56"></span><span style="width:9px;height:9px;border-radius:50%;background:#ffbd2e"></span><span style="width:9px;height:9px;border-radius:50%;background:#27c93f"></span></span>
+        <span style="flex:1;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:10.5px;color:var(--gray);display:flex;align-items:center;gap:6px"><i data-lucide="lock" style="width:10px;height:10px;color:#27c93f"></i>propuesta VIV-ALQ-2026-0418 · enlace privado</span>
+      </div>
+      <div style="background:radial-gradient(600px 300px at 85% -10%,rgba(0,144,192,.20),transparent 60%),linear-gradient(160deg,#012a52,#003C78);color:#fff;padding:20px 22px;height:366px;overflow:hidden">
+        <div style="display:flex;align-items:center;gap:12px">
+          <img src="media/logo_vivargo.svg" style="height:20px;width:auto" alt="Grupo Vivargo">
+          <span style="font-size:10px;color:#9fc4de;font-weight:600">Propuesta de alquiler · VIV-ALQ-2026-0418</span>
+        </div>
+        <div style="font-family:var(--fd);font-weight:800;font-size:21px;line-height:1.12;margin-top:14px;max-width:26ch">Grúa telescópica GT-90 para la parada de planta · Unidad Santa Rosa</div>
+        <div style="font-size:10.5px;color:#bcd6ec;margin-top:8px">Preparado para Ing. Carla Núñez · Minera Andes del Sur S.A.</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:15px">
+        ${[
+          ["US$ 24,450","Total sin IGV"],
+          ["12 días","GT-90 con operador"],
+          ["5–16 oct","Parada de planta"],
+          ["15 días","Vigencia"]
+        ].map(c=>`<div style="border:1px solid rgba(255,255,255,.18);border-radius:9px;padding:10px 9px"><div style="font-family:var(--fd);font-weight:800;font-size:13.5px;color:#fff;line-height:1.1">${c[0]}</div><div style="font-size:8.5px;color:#9fc4de;margin-top:3px">${c[1]}</div></div>`).join("")}
+        </div>
+        <div style="font-family:var(--fd);font-weight:700;font-size:12.5px;color:var(--blue-l);margin-top:15px">Alcance</div>
+        <div style="font-size:10px;color:#d6e6f4;margin-top:6px;line-height:1.5">Alquiler de una grúa telescópica GT-90 con operador para el cambio del motor del molino de bolas, durante la parada de planta programada del 5 al 16 de octubre de 2026. Incluye movilización, recargo por altura, rigger certificado y plan de izaje con ingeniería.</div>
+        <div style="margin-top:12px;border-top:1px solid rgba(255,255,255,.16);padding-top:8px;display:flex;flex-direction:column;gap:5px">
+        ${[["Alquiler GT-90 con operador · 12 días","19,800"],["Movilización + recargo por altura","2,000"],["Rigger certificado + plan de izaje","2,650"]].map(r=>`<div style="display:flex;justify-content:space-between;font-size:10px;color:#d6e6f4"><span>${r[0]}</span><b style="color:#fff">US$ ${r[1]}</b></div>`).join("")}
+        </div>
+      </div>
+    </div>
+
+    <!-- DERECHA · qué es + link en vivo -->
+    <div class="anim" style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:11px">
+      <div style="font-family:var(--fd);font-weight:800;font-size:20px;color:var(--navy);line-height:1.25">Del brief a una propuesta que el cliente abre en el navegador</div>
+      ${[
+        ["layout-dashboard","Portada con los números clave","total, días, fechas y vigencia"],
+        ["list-checks","Alcance, equipo y cotización","alquiler, movilización, altura, rigger y plan de izaje"],
+        ["smartphone","Un link, no un PDF plano","se abre en desktop y móvil, listo para enviar"]
+      ].map(c=>`<div style="display:flex;align-items:flex-start;gap:11px;background:#fff;border:1px solid var(--line);border-radius:11px;padding:10px 13px;box-shadow:var(--shadow-sm)"><i data-lucide="${c[0]}" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><div><div style="font-family:var(--fd);font-weight:700;font-size:13px;color:var(--navy);line-height:1.25">${c[1]}</div><div style="font-size:11px;color:var(--gray);margin-top:2px">${c[2]}</div></div></div>`).join("")}
+      <span style="display:inline-flex;align-items:center;gap:9px;background:linear-gradient(135deg,var(--blue),var(--blue-l));color:#fff;border-radius:999px;padding:11px 17px;font-family:var(--fd);font-weight:700;font-size:12.5px;box-shadow:var(--shadow-sm);width:fit-content;margin-top:2px"><i data-lucide="folder" style="width:15px;height:15px"></i>Sale del Project Comercial Alquiler</span>
+    </div>
+  </div>
+  ${footer("Demo · propuesta web")}
+</div></div>`);
+
+
+/* 10.7 · Demo — formulario que genera la cotización */
+slides.push(`<div class="slide bg-light"><div class="pad">
+  ${titlebar("Demo · un cotizador de alquiler","Un formulario que llenas — y te genera la cotización")}
+  <div style="display:flex;gap:18px;margin-top:12px;flex:1;align-items:stretch">
+
+    <!-- IZQUIERDA · el formulario -->
+    <div class="anim" style="flex:1;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-sm);overflow:hidden;display:flex;flex-direction:column">
+      <div style="background:var(--tint);border-bottom:1px solid var(--line);padding:10px 14px;display:flex;align-items:center;gap:9px">
+        <i data-lucide="clipboard-list" style="width:14px;height:14px;color:var(--blue)"></i>
+        <span style="font-family:var(--fd);font-weight:800;font-size:13px;color:var(--navy)">Nueva cotización de alquiler</span>
+      </div>
+      <div style="padding:13px 14px;display:flex;flex-direction:column;gap:7px;flex:1">
+      ${[
+        ["Equipo","ML-86 · manlift JLG 860SJ"],
+        ["Días","10"],
+        ["Lugar","Unidad Santa Rosa, Arequipa · hasta 300 km · sobre 3,500 m s. n. m."],
+        ["Con operador","Sí"],
+        ["Ingreso a mina","Sí"]
+      ].map(f=>`<div><div style="font-size:8.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gray)">${f[0]}</div><div style="margin-top:3px;border:1px solid var(--line);border-radius:7px;padding:6px 10px;font-size:11px;color:var(--ink);background:#fbfdff;line-height:1.45">${f[1]}</div></div>`).join("")}
+        <div style="margin-top:auto;background:linear-gradient(135deg,var(--blue),var(--blue-l));color:#fff;border-radius:8px;padding:9px;text-align:center;font-family:var(--fd);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;gap:7px;box-shadow:var(--shadow-sm)"><i data-lucide="sparkles" style="width:13px;height:13px"></i>Generar cotización</div>
+      </div>
+    </div>
+
+    <div class="anim" style="align-self:center;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--blue)">
+      <i data-lucide="arrow-right" style="width:26px;height:26px"></i>
+      <span style="font-size:8.5px;font-weight:700;color:var(--gray);letter-spacing:.5px">AL INSTANTE</span>
+    </div>
+
+    <!-- DERECHA · la cotización generada -->
+    <div class="anim" style="flex:1.05;border-radius:14px;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--line);background:#fff;display:flex;flex-direction:column">
+      <div style="background:linear-gradient(150deg,#012a52,#003C78);padding:13px 16px;color:#fff">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <img src="media/logo_vivargo.svg" style="height:17px;width:auto" alt="Grupo Vivargo">
+          <span style="font-size:9.5px;color:#9fc4de;font-weight:700">VIV-ALQ-2026-0419</span>
+        </div>
+        <div style="font-family:var(--fd);font-weight:800;font-size:14.5px;margin-top:9px">Cotización de alquiler</div>
+        <div style="font-size:10px;color:#bcd6ec;margin-top:2px">Minera Andes del Sur · Unidad Santa Rosa</div>
+      </div>
+      <div style="padding:12px 16px;display:flex;flex-direction:column;flex:1">
+      ${[
+        ["Alquiler ML-86 · 10 días × 260","US$ 2,600.00"],
+        ["Operador certificado · 10 días × 140","US$ 1,400.00"],
+        ["Movilización (hasta 300 km)","US$ 900.00"],
+        ["Recargo por altura (+25% movilización)","US$ 225.00"]
+      ].map(r=>`<div style="display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px solid var(--line)"><span style="font-size:11px;color:var(--ink)">${r[0]}</span><span style="font-size:11px;font-weight:700;color:var(--navy);white-space:nowrap">${r[1]}</span></div>`).join("")}
+        <div style="margin-top:9px;display:flex;flex-direction:column;gap:5px">
+          <div style="display:flex;justify-content:space-between;align-items:center;background:var(--tint);border-radius:9px;padding:9px 11px;margin-top:3px">
+            <span style="font-family:var(--fd);font-weight:800;font-size:12.5px;color:var(--navy)">Total sin IGV</span>
+            <span style="font-family:var(--fd);font-weight:800;font-size:16px;color:var(--blue)">US$ 5,125.00</span>
+          </div>
+        </div>
+        <div style="margin-top:auto;padding-top:10px;font-size:9.5px;color:var(--gray);line-height:1.5;border-top:1px solid var(--line)"><b style="color:var(--navy)">Ingreso a mina:</b> acreditación de 3 a 5 días hábiles antes de movilizar · Vigencia: 15 días · Cliente nuevo: 50% de adelanto</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="anim" style="margin-top:12px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+  ${[
+    ["percent","Aplica el tarifario y los recargos"],
+    ["hash","Numera y fecha la cotización"],
+    ["alert-triangle","Avisa el plazo de ingreso a mina"]
+  ].map(c=>`<span style="display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:12px;font-weight:700;color:var(--navy);box-shadow:var(--shadow-sm)"><i data-lucide="${c[0]}" style="width:14px;height:14px;color:var(--blue)"></i>${c[1]}</span>`).join("")}
+  </div>
+  ${footer("Demo · formulario a cotización")}
+</div></div>`);
+
+/* 11 · Límites */
+slides.push(`<div class="slide bg-dark2"><div class="pad" style="justify-content:center">
+  <div class="kicker anim"><span class="bar"></span>Límite importante</div>
+  <h1 class="title anim" style="font-size:44px;margin-top:14px;max-width:30ch;line-height:1.2">No todo debe convertirse <span style="color:var(--blue-l)">en app.</span></h1>
+  <p class="lead anim" style="font-size:19px;margin-top:22px;max-width:62ch">Si el ERP ya factura las valorizaciones o el sistema de mantenimiento ya programa los preventivos, no los dupliques en una app. Code es para <b style="color:#fff">lo intermedio</b> — como un cotizador rápido que antes no pedías porque TI estaba ocupado.</p>
+  ${brand()}
+</div></div>`);
+
+/* 12 · Frases */
+slides.push(`<div class="slide bg-dark"><div class="pad" style="justify-content:center">
+  ${ic('quote','blue',30)}
+  <h1 class="title anim" style="font-size:36px;margin-top:22px;max-width:36ch;line-height:1.3"><span style="color:var(--blue-l)">Design</span> convierte conversación en entregable visual.</h1>
+  <h1 class="title anim" style="font-size:36px;margin-top:8px;max-width:36ch;line-height:1.3"><span style="color:var(--blue-l)">Code</span> permite pasar de una idea a una herramienta.</h1>
+  <p class="lead anim" style="font-size:18px;margin-top:22px;max-width:60ch">No se trata de volverte programador. Se trata de <b style="color:#fff">prototipar herramientas</b> que antes nunca pedías.</p>
+  ${brand()}
+</div></div>`);
+
+const stage=document.getElementById('stage');stage.innerHTML=slides.join("");
+const els=[...stage.querySelectorAll('.slide')];document.getElementById('total').textContent=els.length;let idx=0;
+function show(n){n=Math.max(0,Math.min(els.length-1,n));els.forEach((s,i)=>s.classList.toggle('active',i===n));idx=n;document.getElementById('cur').textContent=n+1;document.getElementById('progress').style.width=((n+1)/els.length*100)+'%';els[n].querySelectorAll('.anim').forEach((el,k)=>el.style.transitionDelay=(0.04+k*0.05)+'s');if(window.lucide)lucide.createIcons()}
+document.getElementById('next').onclick=()=>show(idx+1);document.getElementById('prev').onclick=()=>show(idx-1);
+document.addEventListener('keydown',e=>{if(['ArrowRight',' ','PageDown','Enter'].includes(e.key)){e.preventDefault();show(idx+1)}else if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(idx-1)}else if(e.key==='Home')show(0);else if(e.key==='End')show(els.length-1);else if(e.key.toLowerCase()==='f'){if(!document.fullscreenElement)document.documentElement.requestFullscreen();else document.exitFullscreen()}});
+stage.addEventListener('click',e=>{if(e.clientX>window.innerWidth*0.5)show(idx+1);else show(idx-1)});
+function fit(){document.getElementById('deck').style.transform=`scale(${Math.min(window.innerWidth/1280,window.innerHeight/720)})`}
+window.addEventListener('resize',fit);fit();if(window.lucide)lucide.createIcons();show(0);
+</script></body></html>

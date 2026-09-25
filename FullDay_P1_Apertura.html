@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FullDay P1 — Apertura + mentalidad AI-first · MyWorkIn × Grupo Vivargo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{--navy:#003C78;--navy-d:#012a52;--navy-dd:#01182f;--blue:#0090C0;--blue-l:#57B6DD;--tint:#EAF3FA;--ink:#132a47;--gray:#5B6B7B;--line:#dbe6ef;--amber:#F2A23C;--shadow:0 18px 40px -18px rgba(2,30,60,.45);--shadow-sm:0 8px 22px -12px rgba(2,30,60,.35);--fd:'Sora',sans-serif;--fb:'Inter',sans-serif;--fc:'JetBrains Mono',monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#05101f;font-family:var(--fb);-webkit-font-smoothing:antialiased;overflow:hidden}
+.viewport{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 30%,#0a1f3a,#05101f 75%)}
+.deck{position:relative;transform-origin:center center}
+.stage{position:relative;width:1280px;height:720px;border-radius:18px;overflow:hidden;box-shadow:0 40px 120px -30px rgba(0,0,0,.8)}
+.slide{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .55s ease,transform .55s ease;transform:scale(1.02);overflow:hidden}
+.slide.active{opacity:1;visibility:visible;transform:scale(1)}
+.pad{position:absolute;inset:0;padding:64px 72px;display:flex;flex-direction:column}
+.bg-light{background:radial-gradient(1200px 500px at 88% -10%,rgba(0,144,192,.10),transparent 60%),linear-gradient(180deg,#fff,#f3f8fc)}
+.bg-tint{background:radial-gradient(900px 500px at 90% 110%,rgba(0,144,192,.10),transparent 60%),linear-gradient(180deg,#f6fafd,#eef5fb)}
+.bg-dark{background:radial-gradient(900px 600px at 82% 8%,rgba(87,182,221,.30),transparent 55%),radial-gradient(700px 500px at 10% 100%,rgba(0,144,192,.22),transparent 60%),linear-gradient(135deg,#01244a,#003C78 58%,#0a5390)}
+.bg-dark2{background:radial-gradient(800px 600px at 85% 12%,rgba(87,182,221,.22),transparent 55%),linear-gradient(150deg,#01182f,#012a52 70%)}
+.bg-black{background:radial-gradient(900px 600px at 80% 15%,rgba(0,144,192,.25),transparent 55%),radial-gradient(700px 500px at 15% 95%,rgba(87,182,221,.18),transparent 60%),linear-gradient(160deg,#020a18,#06182d)}
+.kicker{font-family:var(--fb);font-weight:700;font-size:14px;letter-spacing:3px;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:10px}
+.bg-dark .kicker,.bg-dark2 .kicker,.bg-black .kicker{color:var(--blue-l)}
+.kicker .bar{width:34px;height:3px;border-radius:3px;background:currentColor;display:inline-block}
+h1.title{font-family:var(--fd);font-weight:800;color:var(--navy);font-size:42px;line-height:1.08;letter-spacing:-.5px;margin-top:14px}
+.bg-dark h1.title,.bg-dark2 h1.title,.bg-black h1.title{color:#fff}
+.lead{font-size:18px;color:var(--gray);margin-top:12px;max-width:62ch;line-height:1.5}
+.bg-dark .lead,.bg-dark2 .lead,.bg-black .lead{color:#bcd6ec}
+.titlebar{display:flex;flex-direction:column}
+.logo{height:40px;width:auto}.logo.white{filter:brightness(0) invert(1)}
+.logo-plate{background:#fff;border-radius:14px;padding:16px 22px;box-shadow:var(--shadow);display:inline-flex}
+.brandmark{position:absolute;right:60px;bottom:34px;height:30px;opacity:.95}.brandmark.cobrand{display:flex;align-items:center;gap:14px}.brandmark.cobrand img{height:26px;width:auto}.cb-sep{width:1px;height:22px;background:rgba(255,255,255,.35)}.logo-plate{align-items:center;gap:18px;align-self:flex-start}.logo-plate .vv{filter:brightness(0)}.logo-plate .cb-sep{background:#d5dbe2;height:34px}
+.footer{position:absolute;left:72px;right:72px;bottom:26px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--gray);border-top:1px solid var(--line);padding-top:10px}
+.footer .sec{color:var(--blue);font-weight:700}
+.bg-dark .footer,.bg-dark2 .footer,.bg-black .footer{border-color:rgba(255,255,255,.14);color:#9fc0dc}.bg-dark .footer .sec,.bg-dark2 .footer .sec,.bg-black .footer .sec{color:var(--blue-l)}
+.grid{display:grid;gap:18px}
+.ic{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;flex:none}
+.ic svg{stroke-width:2.1}
+.ic.navy{background:var(--navy);color:#fff}.ic.blue{background:linear-gradient(135deg,var(--blue),var(--blue-l));color:#fff}.ic.amber{background:linear-gradient(135deg,var(--amber),#f6bd78);color:#fff}.ic.soft{background:var(--tint);color:var(--navy)}.ic.ghost{background:rgba(255,255,255,.14);color:#fff}
+.slide .anim{opacity:0;transform:translateY(22px);transition:opacity .6s cubic-bezier(.2,.7,.3,1),transform .6s cubic-bezier(.2,.7,.3,1)}
+.slide.active .anim{opacity:1;transform:none}
+.ctl{position:fixed;z-index:50;display:flex;align-items:center;gap:14px;bottom:22px;left:50%;transform:translateX(-50%);background:rgba(6,18,34,.66);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.12);padding:8px 14px;border-radius:999px;color:#cfe0ee;font-size:13px;font-weight:600}
+.ctl button{all:unset;cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:50%;color:#dbe9f6}.ctl button:hover{background:rgba(255,255,255,.12)}
+.ctl .count{min-width:54px;text-align:center;letter-spacing:1px}
+.progress{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,var(--blue),var(--blue-l));z-index:60;transition:width .4s ease}
+.hint{position:fixed;top:14px;right:16px;z-index:50;color:#7f9bb5;font-size:12px}
+</style></head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="hint">← → para navegar · F pantalla completa</div>
+<div class="viewport"><div class="deck" id="deck"><div class="stage" id="stage"></div></div></div>
+<div class="ctl"><button id="prev"><i data-lucide="chevron-left"></i></button><span class="count"><span id="cur">1</span> / <span id="total">1</span></span><button id="next"><i data-lucide="chevron-right"></i></button></div>
+<script>
+const LOGO="logo_myworkin.png";const LOGO_VV="media/logo_vivargo.svg";
+const SEC="FullDay · Claude e IA para el trabajo · Grupo Vivargo";
+function ic(n,c,s=22){return `<span class="ic ${c}" style="width:${s+22}px;height:${s+22}px"><i data-lucide="${n}" style="width:${s}px;height:${s}px"></i></span>`}
+function footer(t){return `<div class="footer anim"><span>${SEC}</span><span class="sec">${t}</span></div>`}
+function titlebar(k,t){return `<div class="titlebar anim"><div class="kicker"><span class="bar"></span>${k}</div><h1 class="title">${t}</h1></div>`}
+function brand(){return `<span class="brandmark cobrand"><img src="${LOGO}" class="logo white" alt="MyWorkIn"><span class="cb-sep"></span><img src="${LOGO_VV}" class="logo vv" alt="Grupo Vivargo"></span>`}
+
+const slides=[];
+
+/* 1 · COVER */
+slides.push(`<div class="slide bg-black"><div class="pad">
+  <div class="logo-plate anim"><img src="${LOGO}" class="logo" alt="MyWorkIn"><span class="cb-sep"></span><img src="${LOGO_VV}" class="logo vv" alt="Grupo Vivargo"></div>
+  <div class="kicker anim" style="margin-top:42px"><span class="bar"></span>FullDay · Bloque 1 · Apertura</div>
+  <h1 class="title anim" style="font-size:76px;margin-top:14px;letter-spacing:-2px;max-width:22ch">Claude e IA para el trabajo</h1>
+  <p class="lead anim" style="font-size:22px;color:#d6ebf8;max-width:60ch;margin-top:14px">Cuatro horas para entender cómo usar Claude para <b style="color:var(--blue-l)">pensar, analizar, crear y automatizar</b>.</p>
+  <div class="anim" style="margin-top:26px;display:flex;align-items:center;gap:14px"><span style="width:46px;height:4px;border-radius:4px;background:var(--blue)"></span><span style="color:#9fc4de;font-size:14px">9:00 a. m. — 1:00 p. m. · Sesión intensiva</span></div>
+  <div class="anim" style="position:absolute;right:72px;bottom:54px;text-align:right">
+    <div style="font-size:12px;font-weight:700;letter-spacing:4px;color:var(--blue-l)">PRESENTA</div>
+    <div style="font-family:var(--fd);font-weight:700;font-size:25px;color:#fff;margin-top:7px">Santiago Franco</div>
+    <div style="font-size:14px;color:#9fc4de;margin-top:3px">CTO · MyWorkIn</div>
+  </div>
+</div></div>`);
+
+/* 2 · La nueva capa de trabajo */
+slides.push(`<div class="slide bg-light"><div class="pad" style="justify-content:center">
+  <div class="kicker anim"><span class="bar"></span>Idea central</div>
+  <h1 class="title anim" style="font-size:56px;margin-top:14px;max-width:22ch;line-height:1.1">La IA no es <span style="color:var(--gray)">solo una herramienta.</span></h1>
+  <h1 class="title anim" style="font-size:56px;margin-top:4px;max-width:22ch;line-height:1.1">Es una <span style="color:var(--blue)">nueva capa de trabajo.</span></h1>
+  <p class="lead anim" style="font-size:20px;margin-top:22px;max-width:60ch">No sirve solo para escribir más rápido. Sirve para pensar, analizar, crear y decidir mejor — todos los días.</p>
+  <div class="anim" style="margin-top:26px;display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:0 12px 12px 0;padding:14px 20px;max-width:860px;box-shadow:var(--shadow-sm)">${ic('route','navy',16)}<p style="font-size:15px;color:var(--ink);line-height:1.5">Desde 1948 en Arequipa, Vivargo pasó <b style="color:var(--navy)">del transporte a soluciones integrales</b>. Más de 75 años de saltos. <b style="color:var(--blue)">La IA es el siguiente.</b></p></div>
+  ${footer("Bloque 1 · Apertura")}
+</div></div>`);
+
+/* 2.5 · Crecimiento más acelerado de la historia */
+slides.push(`<div class="slide bg-light"><div class="pad">
+  ${titlebar("La adopción más rápida de la historia","Tiempo para llegar a 100 millones de usuarios")}
+  <div class="anim" style="margin-top:6px;font-size:11px;color:var(--gray);font-style:italic">Fuente: estimaciones de UBS / SimilarWeb, reportado por Reuters (feb. 2023).</div>
+  <div class="anim" style="margin-top:10px;flex:1;display:flex;align-items:stretch;gap:22px">
+    <div style="flex:1.5;background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 24px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column">
+      <svg viewBox="0 0 600 340" style="width:100%;height:100%">
+        <defs>
+          <linearGradient id="chatGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0090C0"/><stop offset="1" stop-color="#57B6DD"/></linearGradient>
+        </defs>
+        <line x1="60" y1="300" x2="580" y2="300" stroke="#dbe6ef" stroke-width="1.5"/>
+        <line x1="60" y1="40" x2="60" y2="300" stroke="#dbe6ef" stroke-width="1.5"/>
+        <text x="60" y="325" font-family="Sora" font-size="10" fill="#5B6B7B" text-anchor="middle">0</text>
+        <text x="580" y="325" font-family="Sora" font-size="10" fill="#5B6B7B" text-anchor="middle">75 años</text>
+        <text x="30" y="45" font-family="Sora" font-size="10" fill="#5B6B7B">100M</text>
+        <text x="30" y="304" font-family="Sora" font-size="10" fill="#5B6B7B">0</text>
+
+        <!-- Teléfono: 75 años → x=580 -->
+        <path d="M 60 300 Q 300 290 580 40" fill="none" stroke="#94a3b8" stroke-width="2"/>
+        <circle cx="580" cy="40" r="4" fill="#94a3b8"/>
+        <text x="565" y="30" font-family="Sora" font-size="11" font-weight="600" fill="#5B6B7B" text-anchor="end">Teléfono · 75 años</text>
+
+        <!-- TV: 13 años → x/580 * 75 = 13 → x = 60 + (13/75)*520 = 60 + 90 = 150 -->
+        <path d="M 60 300 Q 100 260 150 40" fill="none" stroke="#94a3b8" stroke-width="2"/>
+        <circle cx="150" cy="40" r="4" fill="#94a3b8"/>
+        <text x="160" y="55" font-family="Sora" font-size="11" font-weight="600" fill="#5B6B7B">TV · 13 años</text>
+
+        <!-- Internet: 7 años → x = 60 + (7/75)*520 = 60 + 48.5 = 108.5 -->
+        <path d="M 60 300 Q 85 250 108 40" fill="none" stroke="#94a3b8" stroke-width="2"/>
+        <circle cx="108" cy="40" r="4" fill="#94a3b8"/>
+        <text x="120" y="90" font-family="Sora" font-size="11" font-weight="600" fill="#5B6B7B">Internet · 7 años</text>
+
+        <!-- Facebook: 4.5 años → x = 60 + (4.5/75)*520 = 60 + 31.2 = 91.2 -->
+        <path d="M 60 300 Q 75 240 91 40" fill="none" stroke="#94a3b8" stroke-width="2"/>
+        <circle cx="91" cy="40" r="4" fill="#94a3b8"/>
+        <text x="105" y="130" font-family="Sora" font-size="11" font-weight="600" fill="#5B6B7B">Facebook · 4.5 años</text>
+
+        <!-- Instagram: 2.5 años → x = 60 + (2.5/75)*520 = 60 + 17.3 = 77.3 -->
+        <path d="M 60 300 Q 68 235 77 40" fill="none" stroke="#94a3b8" stroke-width="2"/>
+        <circle cx="77" cy="40" r="4" fill="#94a3b8"/>
+        <text x="90" y="170" font-family="Sora" font-size="11" font-weight="600" fill="#5B6B7B">Instagram · 2.5 años</text>
+
+        <!-- ChatGPT: 2 meses = 0.17 años → x = 60 + (0.17/75)*520 ≈ 61 -->
+        <path d="M 60 300 L 62 40" fill="none" stroke="url(#chatGrad)" stroke-width="4"/>
+        <circle cx="62" cy="40" r="7" fill="#0090C0"/>
+        <text x="80" y="220" font-family="Sora" font-size="14" font-weight="800" fill="#003C78">ChatGPT · 2 MESES</text>
+      </svg>
+    </div>
+    <div class="anim" style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:14px">
+      <div style="background:linear-gradient(160deg,var(--navy),#0a5390);border-radius:16px;padding:22px;color:#fff;box-shadow:var(--shadow-sm)">
+        ${ic('trending-up','blue',22)}
+        <div style="font-family:var(--fd);font-weight:800;font-size:22px;margin-top:12px;line-height:1.3">La tecnología con adopción más rápida de la historia.</div>
+        <p style="color:#cfe6f5;font-size:14px;margin-top:12px;line-height:1.55">ChatGPT llegó a 100 millones de usuarios en <b style="color:var(--blue-l)">2 meses.</b> Internet tardó 7 años. El teléfono, 75.</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow-sm)">
+        <div style="display:flex;align-items:center;gap:10px">${ic('zap','soft',14)}<span style="font-family:var(--fd);font-weight:700;font-size:14.5px;color:var(--navy)">Y sigue acelerando</span></div>
+        <p style="font-size:12.5px;color:var(--gray);margin-top:6px;line-height:1.5">Los modelos mejoran cada mes. Las capacidades de hace un año ya son insuficientes hoy.</p>
+      </div>
+    </div>
+  </div>
+  ${footer("Contexto")}
+</div></div>`);
+
+/* 2.7 · Ya está cambiando el juego corporativo (CNN) */
+slides.push(`<div class="slide bg-dark2"><div class="pad">
+  ${titlebar("Y ya está cambiando el juego","No es futuro — está pasando en las empresas ahora mismo")}
+  <div style="display:flex;gap:24px;margin-top:18px;flex:1;align-items:center">
+    <div class="anim" style="flex:1.3;border-radius:16px;overflow:hidden;box-shadow:var(--shadow);background:#000;position:relative">
+      <img src="assets/cnn_ai_layoffs.png" alt="CNN · AI drives layoffs" style="width:100%;height:auto;display:block">
+    </div>
+    <div class="anim" style="flex:1;display:flex;flex-direction:column;gap:14px">
+      <div style="background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:18px 20px;color:#fff">
+        ${ic('newspaper','blue',18)}
+        <div style="font-family:var(--fd);font-weight:800;font-size:20px;margin-top:12px;line-height:1.3">La IA ya está redefiniendo el mundo corporativo.</div>
+        <p style="color:#d6ebf8;font-size:13.5px;margin-top:10px;line-height:1.55">Empresas — de todos los tamaños — están rediseñando roles, equipos y procesos. Algunos puestos desaparecen, otros se transforman, y aparecen nuevos que no existían hace un año.</p>
+      </div>
+      <div style="background:linear-gradient(135deg,var(--amber),#f6bd78);border-radius:12px;padding:14px 18px;color:#fff;display:flex;align-items:center;gap:12px">
+        ${ic('alert-triangle','ghost',16)}
+        <span style="font-family:var(--fd);font-weight:700;font-size:14.5px">No es opcional entender esto — es tu ventaja competitiva.</span>
+      </div>
+      <div style="font-size:10.5px;color:#9fc4de;font-style:italic">Fuente: CNN News Central — "AI drives layoffs to highest May total since 2020".</div>
+    </div>
+  </div>
+  ${footer("Contexto")}
+</div></div>`);
+
+/* 2.8 · Bots ya superan al tráfico humano (NBC + Cloudflare) */
+slides.push(`<div class="slide bg-black"><div class="pad">
+  ${titlebar("Y hoy — la mayoría del tráfico web ya lo lideran agentes de IA","Mañana serán aún más")}
+  <div style="display:flex;gap:24px;margin-top:18px;flex:1;align-items:center">
+    <div class="anim" style="flex:1.3;border-radius:16px;overflow:hidden;box-shadow:var(--shadow);background:#0a1425">
+      <img src="assets/nbc_bots_traffic.png" alt="NBC News · bots superan tráfico humano" style="width:100%;height:auto;display:block">
+    </div>
+    <div class="anim" style="flex:1;display:flex;flex-direction:column;gap:14px">
+      <div style="background:linear-gradient(135deg,var(--blue),var(--blue-l));border-radius:14px;padding:20px 22px;color:#fff;box-shadow:var(--shadow-sm)">
+        <div style="font-family:var(--fd);font-weight:800;font-size:52px;line-height:1;letter-spacing:-1px">57.4<span style="font-size:32px">%</span></div>
+        <div style="color:#eaf4fb;font-size:14px;margin-top:8px;line-height:1.5">del tráfico web ya es <b>automatizado — bots y agentes de IA</b>.</div>
+        <div style="color:#cfe6f5;font-size:12.5px;margin-top:6px">Solo <b>42.6%</b> lo generan humanos.</div>
+      </div>
+      <div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:18px 20px;color:#fff">
+        ${ic('bot','ghost',18)}
+        <div style="font-family:var(--fd);font-weight:800;font-size:17px;margin-top:12px;line-height:1.3">Los agentes ya navegan por ti.</div>
+        <p style="color:#d6ebf8;font-size:13px;margin-top:8px;line-height:1.5">Comparan precios, leen reseñas, buscan datos, arman reportes. Y en un año — serán aún más.</p>
+      </div>
+      <div style="font-size:10.5px;color:#9fc4de;font-style:italic">Fuente: NBC News, basado en datos de Cloudflare (2025).</div>
+    </div>
+  </div>
+  ${footer("Contexto")}
+</div></div>`);
+
+/* 2.9 · La pregunta que importa (Vivargo) */
+slides.push(`<div class="slide bg-dark"><div class="pad" style="justify-content:center">
+  <div class="kicker anim"><span class="bar"></span>La pregunta que importa</div>
+  <h1 class="title anim" style="font-size:40px;margin-top:16px;max-width:36ch;line-height:1.25">Un jefe de proyecto de una minera le pregunta hoy a una IA <span style="color:var(--blue-l)">quién alquila grúas de gran tonelaje en Perú.</span></h1>
+  <h1 class="title anim" style="font-size:52px;margin-top:22px;max-width:26ch;line-height:1.1">¿Aparece <span style="color:var(--blue-l)">Vivargo</span> en esa respuesta?</h1>
+  ${brand()}
+</div></div>`);
+
+/* 3 · De chat a sistema */
+slides.push(`<div class="slide bg-tint"><div class="pad">
+  ${titlebar("El cambio de mentalidad","De usar IA como chat — a usar IA como sistema")}
+  <div style="display:flex;gap:24px;margin-top:26px;flex:1;align-items:stretch">
+    <div class="anim" style="flex:1;background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column">
+      <div style="font-family:var(--fd);font-weight:700;font-size:11px;color:var(--gray);letter-spacing:2px;text-transform:uppercase">Antes · Chat</div>
+      <div style="font-family:var(--fd);font-weight:800;font-size:26px;color:var(--gray);margin-top:8px">Le pido cosas sueltas</div>
+      <ul style="margin-top:14px;padding-left:18px;color:var(--gray);font-size:14.5px;line-height:1.8;list-style:disc">
+        <li>Cada tarea empieza desde cero</li>
+        <li>Vuelvo a explicar el contexto</li>
+        <li>Respuestas genéricas</li>
+        <li>El resultado depende del prompt del día</li>
+      </ul>
+    </div>
+    <div class="anim" style="flex:1.1;background:linear-gradient(160deg,var(--navy),#0a5390);border-radius:16px;padding:26px;color:#fff;box-shadow:var(--shadow);display:flex;flex-direction:column">
+      <div style="font-family:var(--fd);font-weight:700;font-size:11px;color:var(--blue-l);letter-spacing:2px;text-transform:uppercase">Ahora · Sistema</div>
+      <div style="font-family:var(--fd);font-weight:800;font-size:26px;margin-top:8px">Diseño cómo trabajo con IA</div>
+      <ul style="margin-top:14px;padding-left:18px;color:#d6ebf8;font-size:14.5px;line-height:1.8;list-style:disc">
+        <li>Contexto persistente</li>
+        <li>Métodos y roles ya definidos</li>
+        <li>IA trabaja sobre mis archivos reales</li>
+        <li>Rutinas y entregables recurrentes</li>
+      </ul>
+    </div>
+  </div>
+  ${footer("Bloque 1 · Apertura")}
+</div></div>`);
+
+/* 4 · Qué aprenderemos */
+slides.push(`<div class="slide bg-light"><div class="pad">
+  ${titlebar("Qué vamos a aprender hoy","La ruta de 4 horas — 7 bloques, con tareas de Vivargo")}
+  <div class="grid anim" style="grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,auto);grid-auto-flow:column;margin-top:22px;gap:13px 22px">
+  ${[
+    ["book-open","Fundamentos rápidos de IA y Claude","9:10 — 9:35","Qué puede y qué no — p. ej., una tabla de carga"],
+    ["message-square","Claude Chat + prompting profesional","9:35 — 10:15","Correo de propuesta a un cliente minero"],
+    ["folder-cog","Projects, Skills y memoria de trabajo","10:15 — 10:45","Cotizar un alquiler y revisar un plan de izaje"],
+    ["coffee","Break","10:45 — 10:55",""],
+    ["files","Claude Cowork + archivos","10:55 — 11:40","Reportes de flota y almacenes desde tus archivos"],
+    ["palette","Claude Design + Claude Code","11:40 — 12:20","Propuestas visuales y herramientas simples"],
+    ["timer","Schedule Tasks + workflows AI-first","12:20 — 12:35","Rutinas semanales del área comercial"],
+    ["map","Mapa final + cierre aplicado","12:35 — 13:00","Tu primer caso de uso en Vivargo"]
+  ].map(a=>`<div style="display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;box-shadow:var(--shadow-sm);min-width:0">${ic(a[0],'navy',16)}<div style="flex:1;min-width:0"><div style="font-family:var(--fd);font-weight:700;font-size:14.5px;color:var(--navy)">${a[1]}</div><div style="font-size:11.5px;color:var(--gray);margin-top:2px">${a[2]}${a[3]?` · <span style="color:var(--blue)">${a[3]}</span>`:""}</div></div></div>`).join("")}
+  </div>
+  ${footer("Agenda")}
+</div></div>`);
+
+/* 5 · La promesa */
+slides.push(`<div class="slide bg-dark2"><div class="pad" style="justify-content:center">
+  <div class="kicker anim"><span class="bar"></span>La promesa</div>
+  <h1 class="title anim" style="font-size:44px;margin-top:14px;max-width:34ch;line-height:1.2">En 4 horas vas a entender cómo usar Claude para:</h1>
+  <div class="anim" style="display:flex;flex-direction:column;gap:12px;margin-top:24px">
+  ${[["calculator","Cotizar un alquiler de equipos en minutos"],["file-text","Preparar propuestas para clientes mineros"],["shield-alert","Revisar un plan de izaje buscando omisiones"],["chart-column","Armar reportes de flota y almacenes"],["timer","Diseñar rutinas de trabajo con IA"]].map(c=>`<div style="display:flex;align-items:center;gap:14px;color:#d6ebf8;font-size:18px;font-family:var(--fd);font-weight:600">${ic(c[0],'blue',18)}<span>${c[1]}</span></div>`).join("")}
+  </div>
+  ${brand()}
+</div></div>`);
+
+/* 6 · Frase 1 */
+slides.push(`<div class="slide bg-dark"><div class="pad" style="justify-content:center">
+  <h1 class="title anim" style="font-size:52px;max-width:26ch;line-height:1.15">La IA no reemplaza tu criterio.<br><span style="color:var(--blue-l)">Amplifica tu capacidad de trabajo.</span></h1>
+  ${brand()}
+</div></div>`);
+
+/* 7 · Frase 2 */
+slides.push(`<div class="slide bg-dark2"><div class="pad" style="justify-content:center">
+  <h1 class="title anim" style="font-size:52px;max-width:26ch;line-height:1.15">No se trata de usar más IA.<br><span style="color:var(--blue-l)">Se trata de diseñar mejor cómo trabajas con IA.</span></h1>
+  ${brand()}
+</div></div>`);
+
+/* 8 · Frase de cierre */
+slides.push(`<div class="slide bg-black"><div class="pad" style="justify-content:center">
+  ${ic('sparkles','blue',30)}
+  <h1 class="title anim" style="font-size:56px;margin-top:20px;max-width:24ch;line-height:1.1">El profesional AI-first no solo hace prompts.</h1>
+  <h1 class="title anim" style="font-size:56px;margin-top:8px;max-width:24ch;line-height:1.1"><span style="color:var(--blue-l)">Diseña sistemas de trabajo.</span></h1>
+  <p class="lead anim" style="font-size:18px;margin-top:22px;max-width:60ch;color:#9fc4de">Ese es el hilo conductor de todo lo que veremos hoy.</p>
+  ${brand()}
+</div></div>`);
+
+const stage=document.getElementById('stage');
+stage.innerHTML=slides.join("");
+const els=[...stage.querySelectorAll('.slide')];
+document.getElementById('total').textContent=els.length;
+let idx=0;
+function show(n){n=Math.max(0,Math.min(els.length-1,n));els.forEach((s,i)=>s.classList.toggle('active',i===n));idx=n;document.getElementById('cur').textContent=n+1;document.getElementById('progress').style.width=((n+1)/els.length*100)+'%';els[n].querySelectorAll('.anim').forEach((el,k)=>el.style.transitionDelay=(0.04+k*0.05)+'s');if(window.lucide)lucide.createIcons()}
+document.getElementById('next').onclick=()=>show(idx+1);document.getElementById('prev').onclick=()=>show(idx-1);
+document.addEventListener('keydown',e=>{if(['ArrowRight',' ','PageDown','Enter'].includes(e.key)){e.preventDefault();show(idx+1)}else if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(idx-1)}else if(e.key==='Home')show(0);else if(e.key==='End')show(els.length-1);else if(e.key.toLowerCase()==='f'){if(!document.fullscreenElement)document.documentElement.requestFullscreen();else document.exitFullscreen()}});
+stage.addEventListener('click',e=>{if(e.clientX>window.innerWidth*0.5)show(idx+1);else show(idx-1)});
+function fit(){document.getElementById('deck').style.transform=`scale(${Math.min(window.innerWidth/1280,window.innerHeight/720)})`}
+window.addEventListener('resize',fit);fit();if(window.lucide)lucide.createIcons();show(0);
+</script></body></html>

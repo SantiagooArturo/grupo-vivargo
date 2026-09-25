@@ -1,0 +1,10 @@
+# Solo se publica el sitio: índice, los 8 bloques, sus imágenes y los logos.
+/*
+!/.gitignore
+!/README.md
+!/index.html
+!/FullDay_P[1-8]_*.html
+!/logo_myworkin.png
+!/assets/
+!/media/
+.DS_Store

@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Full Day · Claude e IA para el trabajo · Grupo Vivargo</title>
+<link rel="icon" href="logo_myworkin.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --coal:#0D0F12; --coal-2:#14181D; --coal-3:#1B2027; --steel:#2A313A;
+  --line:rgba(255,255,255,.09); --line-2:rgba(255,255,255,.16);
+  --txt:#EEF1F4; --mut:#8C96A3; --mut-2:#5F6875;
+  --amber:#F5B301; --amber-d:#C98F00;
+  --fs:'Archivo',system-ui,sans-serif; --fm:'JetBrains Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--coal);color:var(--txt);font-family:var(--fs);-webkit-font-smoothing:antialiased}
+body.locked{overflow:hidden;height:100vh}
+a{color:inherit;text-decoration:none}
+
+/* fondo: plano técnico */
+.grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(var(--line) 1px,transparent 1px),
+    linear-gradient(90deg,var(--line) 1px,transparent 1px),
+    linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:120px 120px,120px 120px,24px 24px,24px 24px;
+  -webkit-mask-image:radial-gradient(ellipse 90% 80% at 50% 30%,#000 35%,transparent 90%);
+  mask-image:radial-gradient(ellipse 90% 80% at 50% 30%,#000 35%,transparent 90%)}
+.glow{position:fixed;z-index:0;pointer-events:none;width:760px;height:760px;border-radius:50%;
+  background:radial-gradient(circle,rgba(245,179,1,.10),transparent 65%);top:-300px;right:-200px}
+
+/* ============ INTRO: el gancho baja el título ============ */
+#intro{position:fixed;inset:0;z-index:50;background:var(--coal);display:flex;align-items:flex-start;justify-content:center;overflow:hidden;cursor:pointer;transition:opacity .6s ease,visibility .6s}
+#intro.out{opacity:0;visibility:hidden}
+#intro .grid-bg{position:absolute}
+.rig{position:relative;width:min(720px,88vw);height:100%;display:flex;flex-direction:column;align-items:center}
+.cable{width:2px;background:repeating-linear-gradient(180deg,#9AA3AE 0 6px,#6E7783 6px 9px);height:0;animation:drop 1.6s cubic-bezier(.3,.7,.2,1) .3s forwards}
+@keyframes drop{to{height:30vh}}
+.hook{opacity:0;animation:fadein .01s linear .3s forwards}
+.hook svg{display:block;width:46px;height:auto;margin-top:-2px}
+.load{margin-top:4px;transform-origin:50% -60px;opacity:0;
+  animation:fadein .01s linear .3s forwards,swing 2.4s ease-out 1.9s both}
+@keyframes fadein{to{opacity:1}}
+@keyframes swing{0%{transform:rotate(3.2deg)}25%{transform:rotate(-2.2deg)}50%{transform:rotate(1.2deg)}75%{transform:rotate(-.5deg)}100%{transform:rotate(0)}}
+.slings{display:flex;justify-content:center;height:42px;position:relative}
+.slings i{position:absolute;top:0;width:2px;height:48px;background:#9AA3AE;transform-origin:top center}
+.slings i:nth-child(1){transform:rotate(38deg)} .slings i:nth-child(2){transform:rotate(-38deg)}
+.plate-load{background:var(--amber);color:#16130A;padding:26px 34px 24px;border-radius:6px;position:relative;
+  box-shadow:0 30px 60px -20px rgba(0,0,0,.8);
+  background-image:repeating-linear-gradient(135deg,transparent 0 14px,rgba(0,0,0,.05) 14px 28px)}
+.plate-load .tagline{font-family:var(--fm);font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.75}
+.plate-load h1{font-weight:900;font-size:clamp(28px,4.6vw,50px);line-height:1;letter-spacing:-.03em;margin-top:8px}
+.plate-load .bolt{position:absolute;width:9px;height:9px;border-radius:50%;background:#16130A;opacity:.35}
+.bolt.a{top:10px;left:10px}.bolt.b{top:10px;right:10px}.bolt.c{bottom:10px;left:10px}.bolt.d{bottom:10px;right:10px}
+.intro-foot{position:absolute;left:0;right:0;bottom:48px;display:flex;flex-direction:column;align-items:center;gap:14px;opacity:0;animation:fadeup .7s ease 2.6s forwards}
+@keyframes fadeup{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.duo{display:flex;align-items:center;gap:18px}
+.duo img{height:28px;width:auto;display:block}
+.duo .mw{filter:brightness(0) invert(1)}
+.duo .x{font-family:var(--fm);color:var(--amber);font-size:14px}
+.intro-foot p{font-family:var(--fm);font-size:12px;color:var(--mut);letter-spacing:.04em}
+.skip{position:absolute;top:22px;right:24px;font-family:var(--fm);font-size:11.5px;color:var(--mut);background:transparent;border:1px solid var(--line-2);border-radius:4px;padding:7px 12px;cursor:pointer;z-index:2}
+.skip:hover{color:var(--amber);border-color:var(--amber)}
+
+/* ============ SITIO ============ */
+#site{position:relative;z-index:1;opacity:0;transition:opacity .6s ease .1s}
+#site.on{opacity:1}
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:26px 0;border-bottom:1px solid var(--line)}
+.topbar .duo img{height:24px}
+.topbar .code{font-family:var(--fm);font-size:11px;color:var(--mut-2);letter-spacing:.08em}
+
+.hero{display:grid;grid-template-columns:1.25fr .75fr;gap:48px;padding:64px 0 46px;align-items:end}
+.eyebrow{font-family:var(--fm);font-size:12px;color:var(--amber);letter-spacing:.14em;text-transform:uppercase;display:flex;align-items:center;gap:12px}
+.eyebrow::before{content:"";width:28px;height:2px;background:var(--amber)}
+.hero h1{font-weight:900;font-size:clamp(40px,6.4vw,78px);line-height:.95;letter-spacing:-.04em;margin-top:18px}
+.hero h1 em{font-style:normal;color:transparent;-webkit-text-stroke:1.5px var(--txt)}
+.hero .lead{font-size:17px;line-height:1.6;color:#C3CAD3;margin-top:22px;max-width:52ch}
+.spec{border:1px solid var(--line-2);border-radius:6px;background:rgba(20,24,29,.7);backdrop-filter:blur(4px)}
+.spec div{display:flex;justify-content:space-between;gap:16px;padding:13px 18px;border-bottom:1px solid var(--line);font-size:14px}
+.spec div:last-child{border-bottom:0}
+.spec dt{font-family:var(--fm);font-size:11px;color:var(--mut);letter-spacing:.08em;text-transform:uppercase;padding-top:2px}
+.spec dd{font-weight:600;text-align:right}
+.spec dd b{color:var(--amber);font-weight:700}
+
+.sheet-head{display:grid;grid-template-columns:120px 70px 1fr 44px;gap:18px;padding:0 20px 10px;font-family:var(--fm);font-size:10.5px;color:var(--mut-2);letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid var(--line-2)}
+.rows{margin-bottom:28px}
+.row{display:grid;grid-template-columns:120px 70px 1fr 44px;gap:18px;align-items:center;padding:20px 20px;border-bottom:1px solid var(--line);position:relative;transition:background .2s ease}
+.row::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--amber);transform:scaleY(0);transition:transform .25s ease}
+.row:hover{background:var(--coal-2)}
+.row:hover::before{transform:scaleY(1)}
+.row .t{font-family:var(--fm);font-size:13px;color:var(--mut)}
+.row .n{font-family:var(--fm);font-size:13px;color:var(--amber);font-weight:600}
+.row .ti{font-weight:700;font-size:19px;letter-spacing:-.01em}
+.row .su{font-size:14px;color:var(--mut);margin-top:4px;line-height:1.45}
+.row .go{width:36px;height:36px;border:1px solid var(--line-2);border-radius:4px;display:flex;align-items:center;justify-content:center;color:var(--mut);transition:all .2s ease}
+.row:hover .go{background:var(--amber);border-color:var(--amber);color:#16130A;transform:translateX(3px)}
+.row.pause{padding:12px 20px;background:repeating-linear-gradient(135deg,transparent 0 10px,rgba(245,179,1,.05) 10px 20px)}
+.row.pause .ti{font-size:13px;font-family:var(--fm);font-weight:500;color:var(--mut);letter-spacing:.06em;text-transform:uppercase}
+.row.pause::before{display:none}.row.pause:hover{background:repeating-linear-gradient(135deg,transparent 0 10px,rgba(245,179,1,.05) 10px 20px)}
+
+.foot{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:center;padding:24px 0 40px;border-top:1px solid var(--line);font-family:var(--fm);font-size:11.5px;color:var(--mut-2)}
+.foot kbd{font-family:var(--fm);border:1px solid var(--line-2);border-radius:3px;padding:1px 6px;color:var(--mut)}
+.foot button{font-family:var(--fm);font-size:11.5px;color:var(--mut);background:none;border:1px solid var(--line-2);border-radius:4px;padding:6px 11px;cursor:pointer}
+.foot button:hover{color:var(--amber);border-color:var(--amber)}
+
+.in{opacity:0;transform:translateY(14px)}
+#site.on .in{animation:fadeup .7s cubic-bezier(.2,.7,.3,1) forwards}
+#site.on .d1{animation-delay:.05s}#site.on .d2{animation-delay:.15s}#site.on .d3{animation-delay:.25s}#site.on .d4{animation-delay:.35s}#site.on .d5{animation-delay:.45s}
+
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr;gap:28px;padding:40px 0 30px}
+  .sheet-head{display:none}
+  .row{grid-template-columns:1fr 36px;gap:6px 14px;padding:18px 16px}
+  .row .t{grid-column:1;order:-1;font-size:11.5px}
+  .row .n{display:none}
+  .row .go{grid-row:1 / span 3;grid-column:2}
+  .wrap{padding:0 18px}
+  .topbar .code{display:none}
+  .row.pause{display:flex;gap:14px;align-items:center}
+  .row.pause .n,.row.pause > span:last-child{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}
+  .cable{height:30vh}
+}
+</style>
+</head>
+<body class="locked">
+<div class="grid-bg"></div><div class="glow"></div>
+
+<!-- ============ INTRO ============ -->
+<section id="intro" aria-label="Introducción">
+  <div class="grid-bg"></div>
+  <button class="skip" id="skip">Saltar intro →</button>
+  <div class="rig">
+    <div class="cable"></div>
+    <div class="hook">
+      <svg viewBox="0 0 46 64" fill="none" stroke="#C9D0D8" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="13" y="2" width="20" height="16" rx="3" fill="#2A313A"/>
+        <path d="M23 18v10"/>
+        <path d="M23 28c0 0 12 2 12 14s-10 16-16 12-6-12 2-12"/>
+      </svg>
+    </div>
+    <div class="load">
+      <div class="slings"><i></i><i></i></div>
+      <div class="plate-load">
+        <span class="bolt a"></span><span class="bolt b"></span><span class="bolt c"></span><span class="bolt d"></span>
+        <div class="tagline">Full Day · Sesión intensiva</div>
+        <h1>Claude e IA<br>para el trabajo</h1>
+      </div>
+    </div>
+  </div>
+  <div class="intro-foot">
+    <div class="duo"><img class="mw" src="logo_myworkin.png" alt="MyWorkIn"><span class="x">×</span><img src="media/logo_vivargo.svg" alt="Grupo Vivargo"></div>
+    <p>Soluciones para grandes desafíos, ahora con IA</p>
+  </div>
+</section>
+
+<!-- ============ SITIO ============ -->
+<div id="site">
+  <div class="wrap">
+    <header class="topbar in d1">
+      <div class="duo"><img class="mw" src="logo_myworkin.png" alt="MyWorkIn"><span class="x">×</span><img src="media/logo_vivargo.svg" alt="Grupo Vivargo"></div>
+      <span class="code">PLAN DE TRABAJO · FD-VIV-01</span>
+    </header>
+
+    <section class="hero">
+      <div>
+        <div class="eyebrow in d1">Full Day · Grupo Vivargo</div>
+        <h1 class="in d2">Claude e IA<br><em>para el trabajo</em></h1>
+        <p class="lead in d3">Cuatro horas para usar Claude en el día a día de Vivargo: cotizar alquileres, preparar propuestas para clientes mineros, revisar planes de izaje y automatizar reportes de flota y almacenes.</p>
+      </div>
+      <dl class="spec in d4">
+        <div><dt>Horario</dt><dd>9:00 a. m. — 1:00 p. m.</dd></div>
+        <div><dt>Formato</dt><dd>8 bloques · <b>práctico</b></dd></div>
+        <div><dt>Herramienta</dt><dd>Claude</dd></div>
+        <div><dt>Instructor</dt><dd>Santiago Franco · CTO MyWorkIn</dd></div>
+      </dl>
+    </section>
+
+    <div class="sheet-head in d4"><span>Hora</span><span>Bloque</span><span>Contenido</span><span></span></div>
+    <main class="rows in d5">
+      <a class="row" href="FullDay_P1_Apertura.html"><span class="t">09:00 – 09:10</span><span class="n">01</span>
+        <div><div class="ti">Apertura + mentalidad AI-first</div><div class="su">De 75 años de transporte a soluciones integrales: la IA como el siguiente salto.</div></div>
+        <span class="go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+
+      <a class="row" href="FullDay_P2_Fundamentos.html"><span class="t">09:10 – 09:35</span><span class="n">02</span>
+        <div><div class="ti">Fundamentos rápidos de IA y Claude</div><div class="su">LLM, agentes y tokens. Por qué la IA nunca reemplaza una tabla de carga.</div></div>
+        <span class="go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+
+      <a class="row" href="FullDay_P3_Chat_Prompting.html"><span class="t">09:35 – 10:15</span><span class="n">03</span>
+        <div><div class="ti">Claude Chat + prompting profesional</div><div class="su">Los 5 ingredientes, aplicados a una propuesta de alquiler para una parada de planta.</div></div>
+        <span class="go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+
+      <a class="row" href="FullDay_P4_Projects_Skills.html"><span class="t">10:15 – 10:45</span><span class="n">04</span>
+        <div><div class="ti">Projects, Skills y memoria de trabajo</div><div class="su">El Project Comercial Alquiler y las Skills para cotizar y revisar riesgos de izaje.</div></div>
+        <span class="go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+
+      <div class="row pause"><span class="t">10:45 – 10:55</span><span class="n"></span><div><div class="ti">Pausa · 10 minutos</div></div><span></span></div>
+
+      <a class="row" href="FullDay_P5_Cowork_Archivos.html"><span class="t">10:55 – 11:40</span><span class="n">05</span>
+        <div><div class="ti">Claude Cowork + archivos</div><div class="su">Valorizaciones con partes diarios, conciliación de almacén y benchmark de la competencia.</div></div>
+        <span class="go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+
+      <a class="row" href="FullDay_P6_Design_Code.html"><span class="t">11:40 – 12:20</span><span class="n">06</span>
+        <div><div class="ti">Claude Design + Claude Code</div><div class="su">Fichas de equipos JLG, propuestas como web y un cotizador de alquiler funcional.</div></div>
+        <span class="go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+
+      <a class="row" href="FullDay_P7_Schedule_Workflows.html"><span class="t">12:20 – 12:35</span><span class="n">07</span>
+        <div><div class="ti">Schedule Tasks + workflows AI-first</div><div class="su">Alertas de mantenimiento preventivo y un radar semanal de proyectos mineros.</div></div>
+        <span class="go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+
+      <a class="row" href="FullDay_P8_Mapa_Cierre.html"><span class="t">12:35 – 13:00</span><span class="n">08</span>
+        <div><div class="ti">Mapa final + cierre aplicado</div><div class="su">Qué herramienta usar en alquiler, venta JLG y administración de almacenes.</div></div>
+        <span class="go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+    </main>
+
+    <footer class="foot">
+      <span>En cada bloque: <kbd>←</kbd> <kbd>→</kbd> navegar · <kbd>F</kbd> pantalla completa</span>
+      <span>MyWorkIn × Grupo Vivargo · 2026</span>
+      <button id="replay">Ver la intro de nuevo</button>
+    </footer>
+  </div>
+</div>
+
+<script>
+(function(){
+  var intro=document.getElementById('intro'), site=document.getElementById('site'), body=document.body, t=null, done=false;
+  function enter(){
+    if(done) return; done=true; clearTimeout(t);
+    try{ sessionStorage.setItem('viv_intro','1'); }catch(e){}
+    intro.classList.add('out'); body.classList.remove('locked'); site.classList.add('on');
+  }
+  function bind(){
+    intro.addEventListener('click',enter);
+    intro.querySelector('#skip').addEventListener('click',function(e){e.stopPropagation();enter()});
+    t=setTimeout(enter,4600);
+  }
+  function play(){
+    done=false; body.classList.add('locked'); site.classList.remove('on');
+    // clonar la intro reinicia sus animaciones
+    var clone=intro.cloneNode(true); clone.classList.remove('out'); clone.style.transition='';
+    intro.parentNode.replaceChild(clone,intro); intro=clone;
+    window.scrollTo(0,0); bind();
+  }
+  document.getElementById('replay').addEventListener('click',function(){
+    try{ sessionStorage.removeItem('viv_intro'); }catch(e){} play();
+  });
+  var seen=false;
+  try{ seen=sessionStorage.getItem('viv_intro')==='1'; }catch(e){}
+  if(seen){
+    // la intro se ve una vez por pestaña: al volver de un bloque se entra directo
+    done=true; intro.style.transition='none'; intro.classList.add('out');
+    body.classList.remove('locked'); site.style.transition='none'; site.classList.add('on');
+  }else{
+    bind();
+  }
+})();
+</script>
+</body>
+</html>
