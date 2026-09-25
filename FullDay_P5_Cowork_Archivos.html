@@ -187,26 +187,54 @@ Devuélveme un <span class="k">Excel comparativo</span>:
 
 /* 7 · Demo Excel + archivos · almacenes */
 slides.push(`<div class="slide bg-light"><div class="pad">
-  ${titlebar("Demo alternativa · administración de almacenes","Inventario vs. guías: conciliar el mes")}
-  <div style="margin-top:14px;flex:1;display:flex;align-items:center;gap:22px">
-    ${code("Prompt · carpeta cowork/Almacen_Conciliacion",`<span style="white-space:pre-wrap">Aquí tienes el <span class="k h">inventario de setiembre</span> de un almacén que
-administramos y la carpeta <span class="k">Guias/</span> con los ingresos y salidas.
+  ${titlebar("Demo alternativa · administración de almacenes","Inventario vs. guías: 5 reportes de Excel en minutos")}
+  <div class="codeblock anim" style="margin-top:10px;padding:16px 20px">
+    <div class="codehead"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span>Prompt · carpeta cowork/Almacen_Conciliacion</span></div>
+    <div style="display:grid;grid-template-columns:1fr 1.12fr;gap:26px;font-size:12px;line-height:1.5">
+      <div style="white-space:pre-wrap">Aquí tienes el <span class="k h">inventario de setiembre</span> de un almacén
+que administramos (48 códigos) y la carpeta <span class="k">Guias/</span>
+con las notas de ingreso y los vales de salida
+del mes, en PDF.
 
 Concilia cada código:
-<span class="c">stock inicial + ingresos &minus; salidas = stock esperado</span>
+<span class="c">stock inicial + ingresos &minus; salidas = esperado</span>
 y compáralo con el stock del sistema al 30/09.
+Valoriza cada diferencia con el costo unitario.
 
-Devuélveme el <span class="k">mismo Excel</span> con hojas nuevas:
-1. Kardex del mes · código × guía × cantidad
-2. Conciliación · esperado vs. sistema vs. diferencia
-3. Diferencias ordenadas <span class="k">por faltante y por sobrante</span>
-4. Guías con códigos que no están en el inventario
-5. <span class="k">Mensaje corto</span> para el jefe de almacén: qué contar primero
+Entrégame <span class="k">5 libros de Excel separados</span>, con
+formato profesional: encabezados de color,
+filtros, paneles fijos, formato S/ y de miles,
+columnas ajustadas y <span class="k">fórmulas vivas</span>,
+no valores pegados.
 
-<span class="k">No ajustes el stock.</span> Solo reporta: el conteo físico
-y el ajuste los aprueba el responsable del almacén.</span>`)}
-    <div class="anim" style="flex:1;background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow-sm)"><div style="font-family:var(--fd);font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray)">En la carpeta · datos ficticios</div><div style="display:flex;flex-direction:column;gap:10px;margin-top:12px"><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="file-spreadsheet" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">Inventario_Almacen_Setiembre.xlsx · 10 códigos</span></div><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="folder-open" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">Guias/ · 2 guías de ingreso y 4 de salida</span></div><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="warehouse" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">Repuestos y EPP de un almacén de cliente minero</span></div></div><div style="font-family:var(--fd);font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray);margin-top:18px;padding-top:16px;border-top:1px solid var(--line)">Qué revisar en el resultado</div><div style="display:flex;flex-direction:column;gap:10px;margin-top:12px"><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="scale" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">¿Cuadra el kardex con cada guía?</span></div><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="triangle-alert" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">¿Encontró los 3 códigos con diferencia?</span></div><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="lock" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">¿Dejó el stock sin tocar?</span></div></div></div>
+<span class="k">No ajustes el stock.</span> Solo reporta: el conteo
+físico y el ajuste los aprueba el responsable
+del almacén.</div>
+      <div style="white-space:pre-wrap"><span class="k">1. Kardex_Setiembre.xlsx</span>
+<span class="c">Un movimiento por fila (fecha, guía, tipo, código,</span>
+<span class="c">cantidad, saldo acumulado) y una hoja por familia.</span>
+
+<span class="k">2. Conciliacion_Setiembre.xlsx</span>
+<span class="c">Esperado vs. sistema vs. diferencia en unidades y</span>
+<span class="c">en S/, con semáforo: verde cuadra, ámbar ≤ 5 %, rojo > 5 %.</span>
+
+<span class="k">3. Diferencias_Setiembre.xlsx</span>
+<span class="c">Faltantes y sobrantes en hojas separadas, ordenados</span>
+<span class="c">por impacto en S/, con gráfico del top 10.</span>
+
+<span class="k">4. Guias_Observadas_Setiembre.xlsx</span>
+<span class="c">Códigos que no existen en el inventario, vales sin</span>
+<span class="c">firma y entregas distintas a lo solicitado, con la</span>
+<span class="c">acción sugerida para cada una.</span>
+
+<span class="k">5. Resumen_Ejecutivo_Setiembre.xlsx</span>
+<span class="c">Dashboard en una hoja: exactitud de inventario %,</span>
+<span class="c">valor de las diferencias, ítems a contar, gráfico por</span>
+<span class="c">familia y un mensaje de 5 líneas para el jefe de</span>
+<span class="c">almacén: qué contar primero y por qué.</span></div>
+    </div>
   </div>
+  <div class="anim" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px"><span style="display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 13px;font-size:12px;color:var(--ink);box-shadow:var(--shadow-sm)"><i data-lucide="file-spreadsheet" style="width:13px;height:13px;color:var(--blue)"></i>48 códigos · 7 familias · datos ficticios</span><span style="display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 13px;font-size:12px;color:var(--ink);box-shadow:var(--shadow-sm)"><i data-lucide="files" style="width:13px;height:13px;color:var(--blue)"></i>20 guías en PDF · 8 ingresos y 12 salidas</span><span style="display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 13px;font-size:12px;color:var(--ink);box-shadow:var(--shadow-sm)"><i data-lucide="search-check" style="width:13px;height:13px;color:var(--blue)"></i>Revisa: 9 diferencias · 2 códigos inexistentes · 1 vale sin firma</span></div>
   ${footer("Demo · Almacenes")}
 </div></div>`);
 
