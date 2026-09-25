@@ -44,6 +44,7 @@ h1.title{font-family:var(--fd);font-weight:800;color:var(--navy);font-size:42px;
 .hint{position:fixed;top:14px;right:16px;z-index:50;color:#7f9bb5;font-size:12px}
 .imgwrap{border-radius:16px;overflow:hidden;box-shadow:var(--shadow);background:#fff}
 .imgwrap img{width:100%;height:100%;object-fit:contain;display:block}
+.codehead .cp{margin-left:auto;font-family:var(--fb);font-size:10.5px;font-weight:700;letter-spacing:.5px;text-transform:none;color:#d6ebf8;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:4px 12px;cursor:pointer;transition:background .2s ease}.codehead .cp:hover{background:#0090C0;border-color:#0090C0;color:#fff}.codehead .cp.ok{background:#1F8A5B;border-color:#1F8A5B;color:#fff}
 </style></head>
 <body>
 <div class="progress" id="progress"></div><div class="hint">← → · F pantalla completa</div>
@@ -98,11 +99,11 @@ slides.push(`<div class="slide bg-tint"><div class="pad">
     </div>
     <div class="anim" style="flex:1.1;background:linear-gradient(160deg,var(--navy),#0a5390);border-radius:16px;padding:26px;color:#fff;box-shadow:var(--shadow-sm);display:flex;flex-direction:column">
       <div style="display:flex;align-items:center;gap:12px">${ic('files','blue',18)}<span style="font-family:var(--fd);font-weight:800;font-size:22px">Claude Cowork</span></div>
-      <p style="color:#d6ebf8;font-size:14.5px;margin-top:12px;line-height:1.55">Para <b style="color:var(--blue-l)">trabajar sobre archivos</b> — carpetas, PDFs, Excels, partes diarios, fichas técnicas, webs.</p>
+      <p style="color:#d6ebf8;font-size:14.5px;margin-top:12px;line-height:1.55">Para <b style="color:var(--blue-l)">trabajar sobre archivos</b> — carpetas, PDFs, Excels, facturas, fichas técnicas, webs.</p>
       <div style="margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.18);font-family:var(--fd);font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#9fc4de">Ejemplos</div>
       <div style="display:flex;flex-direction:column;gap:9px;margin-top:12px">
       ${[
-        ["file-spreadsheet","Consolidar los partes diarios del mes"],
+        ["folder-tree","Ordenar 80 facturas de proveedores en carpetas"],
         ["files","Revisar 10 propuestas contra el tarifario"],
         ["file-text","Resumir las bases de una licitación minera de 40 páginas"],
         ["globe","Comparar fichas técnicas JLG en la web del fabricante"]
@@ -122,40 +123,40 @@ slides.push(`<div class="slide bg-light"><div class="pad">
   ${titlebar("Qué tipo de trabajos puede hacer","El día a día de un profesional AI-first que usa Cowork")}
   <div class="grid anim" style="grid-template-columns:repeat(4,1fr);margin-top:24px;gap:14px;flex:1;align-items:stretch">
   ${[
-    ["folder-search","Analizar una carpeta","de partes diarios, propuestas o contratos"],
+    ["folder-search","Analizar una carpeta","de facturas, propuestas o contratos"],
     ["users","Comparar propuestas","contra tarifario y condiciones"],
     ["table","Leer Excels","horómetros, inventarios, pedidos"],
     ["file-check","Revisar documentos","propuestas, contratos, minutas"],
     ["search","Investigar sitios","competencia, fichas técnicas"],
     ["file-audio","Transcribir audio","reuniones, visitas técnicas"],
     ["mail","Preparar correos","a clientes, a partir de contexto"],
-    ["file-bar-chart","Armar reportes","valorizaciones y resúmenes"]
+    ["file-bar-chart","Armar reportes","gasto por proveedor y resúmenes"]
   ].map(c=>`<div style="background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;box-shadow:var(--shadow-sm)">${ic(c[0],'blue',14)}<div style="font-family:var(--fd);font-weight:700;font-size:13.5px;color:var(--navy);margin-top:10px">${c[1]}</div><div style="font-size:11.5px;color:var(--gray);margin-top:4px">${c[2]}</div></div>`).join("")}
   </div>
   ${footer("Casos")}
 </div></div>`);
 
-/* 5 · Demo carpeta de partes diarios */
+/* 5 · Demo carpeta de facturas de proveedores */
 slides.push(`<div class="slide bg-light"><div class="pad">
-  ${titlebar("Demo · consolidar los partes diarios del mes","Partes diarios sueltos → base de la valorización")}
+  ${titlebar("Demo · ordenar las facturas de proveedores","80 facturas sueltas → carpetas ordenadas + resumen de gasto")}
   <div style="margin-top:14px;flex:1;display:flex;align-items:center;gap:22px">
-    ${code("Prompt · carpeta demos/Partes_Diarios_Setiembre",`<span style="white-space:pre-wrap">Lee todos los <span class="k h">partes diarios</span> de esta carpeta: fecha, equipo,
-cliente, obra, horómetro inicio y fin, horas, estado y firma.
+    ${code("Prompt · carpeta cowork/Facturas_Proveedores_Sin_Ordenar",`<span style="white-space:pre-wrap">En esta carpeta hay <span class="k h">80 facturas de proveedores</span>
+de julio a setiembre, con nombres desordenados.
 
-Aplica las condiciones del Project <span class="c">(día = 8 h, hora extra,</span>
-<span class="c">stand-by al 50%, domingos +30%)</span> y genera un <span class="k">Excel</span>:
+1. Lee cada PDF: proveedor, serie-número, fecha,
+   moneda, total y a qué equipo corresponde.
+2. <span class="k">Ordénalas en carpetas</span> por categoría de gasto
+   y dentro por mes <span class="c">(Repuestos/08-agosto/…)</span>.
+3. <span class="k">Renómbralas</span> como <span class="c">AAAA-MM-DD_Proveedor_Serie-Número.pdf</span>
+4. Crea un <span class="k">Excel resumen</span>: una fila por factura y
+   totales por categoría y mes, en soles y en dólares.
 
-<span class="c">1. Base consolidada · una fila por parte diario</span>
-<span class="c">2. Horas por equipo y cliente · normales, extra y stand-by</span>
-<span class="c">3. Pre-valorización por cliente · US$ sin IGV</span>
-<span class="c">4. Alertas · horómetros que no cuadran, partes sin firma,</span>
-<span class="c">   domingos y feriados</span>
-
-<span class="k">No inventes datos.</span> Si un parte no cuadra, no lo corrijas:
-márcalo para que Operaciones lo revise.</span>`)}
-    <div class="anim" style="flex:1;background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow-sm)"><div style="font-family:var(--fd);font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray)">En la carpeta · datos ficticios</div><div style="display:flex;flex-direction:column;gap:10px;margin-top:12px"><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="folder-open" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">8 partes diarios de setiembre, uno por equipo y cliente</span></div><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="truck" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">GT-25 · GT-50 · GT-90 · GT-130 · CG-40 · ML-86 · TH-10 · MC-5</span></div><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="map-pin" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">Despachos desde Lima (Lurín), Arequipa y Trujillo</span></div></div><div style="font-family:var(--fd);font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray);margin-top:18px;padding-top:16px;border-top:1px solid var(--line)">Qué revisar en el resultado</div><div style="display:flex;flex-direction:column;gap:10px;margin-top:12px"><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="gauge" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">¿Detectó el horómetro que retrocede?</span></div><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="pen-line" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">¿Marcó el parte sin firma del cliente?</span></div><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="cloud-lightning" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">¿Separó los días de stand-by por clima?</span></div></div></div>
+Lo que no sea una factura válida para Vivargo
+<span class="c">(duplicados, cotizaciones, facturas a otro RUC)</span>
+va a una carpeta <span class="k">_Revisar</span> con el motivo. No la sumes.</span>`)}
+    <div class="anim" style="flex:1;background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow-sm)"><div style="font-family:var(--fd);font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray)">En la carpeta · datos ficticios</div><div style="display:flex;flex-direction:column;gap:10px;margin-top:12px"><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="files" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">80 PDFs con nombres como «scan_0788», «doc (22)» o «IMG_20260804_factura»</span></div><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="building-2" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">11 proveedores: repuestos, combustible, llantas, mantenimiento, transporte, EPP y más</span></div><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="coins" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">En soles y en dólares</span></div></div><div style="font-family:var(--fd);font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray);margin-top:18px;padding-top:16px;border-top:1px solid var(--line)">Qué revisar en el resultado</div><div style="display:flex;flex-direction:column;gap:10px;margin-top:12px"><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="copy" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">¿Encontró las 2 facturas duplicadas?</span></div><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="file-x" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">¿Separó la cotización y la factura emitida a otro RUC?</span></div><div style="display:flex;align-items:flex-start;gap:10px"><i data-lucide="minus-circle" style="width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px"></i><span style="font-size:13px;color:var(--ink);line-height:1.45">¿Restó la nota de crédito en vez de sumarla?</span></div></div></div>
   </div>
-  ${footer("Demo · Partes diarios")}
+  ${footer("Demo · Facturas")}
 </div></div>`);
 
 /* 6 · Demo benchmark de la competencia */
@@ -188,7 +189,7 @@ Devuélveme un <span class="k">Excel comparativo</span>:
 slides.push(`<div class="slide bg-light"><div class="pad">
   ${titlebar("Demo alternativa · administración de almacenes","Inventario vs. guías: conciliar el mes")}
   <div style="margin-top:14px;flex:1;display:flex;align-items:center;gap:22px">
-    ${code("Prompt · carpeta demos/Almacen_Conciliacion",`<span style="white-space:pre-wrap">Aquí tienes el <span class="k h">inventario de setiembre</span> de un almacén que
+    ${code("Prompt · carpeta cowork/Almacen_Conciliacion",`<span style="white-space:pre-wrap">Aquí tienes el <span class="k h">inventario de setiembre</span> de un almacén que
 administramos y la carpeta <span class="k">Guias/</span> con los ingresos y salidas.
 
 Concilia cada código:
@@ -252,4 +253,28 @@ document.addEventListener('keydown',e=>{if(['ArrowRight',' ','PageDown','Enter']
 stage.addEventListener('click',e=>{if(e.clientX>window.innerWidth*0.5)show(idx+1);else show(idx-1)});
 function fit(){document.getElementById('deck').style.transform=`scale(${Math.min(window.innerWidth/1280,window.innerHeight/720)})`}
 window.addEventListener('resize',fit);fit();if(window.lucide)lucide.createIcons();show(0);
-</script></body></html>
+</script><script>
+/* Botón «Copiar» en cada bloque de prompt: copia el texto sin la cabecera. */
+(function(){
+  function copiar(txt,btn){
+    var ok=function(){btn.textContent='Copiado ✓';btn.classList.add('ok');
+      setTimeout(function(){btn.textContent='Copiar';btn.classList.remove('ok')},1800)};
+    var legacy=function(){var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';
+      ta.style.opacity='0';document.body.appendChild(ta);ta.select();
+      try{document.execCommand('copy');ok()}finally{ta.remove()}};
+    if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(txt).then(ok,legacy);else legacy();
+  }
+  document.querySelectorAll('.codeblock').forEach(function(cb){
+    var head=cb.querySelector('.codehead');
+    if(!head||head.querySelector('.cp'))return;
+    var b=document.createElement('button');b.type='button';b.className='cp';b.textContent='Copiar';
+    b.addEventListener('click',function(e){
+      e.stopPropagation();
+      head.style.display='none';var txt=cb.innerText.trim();head.style.display='';
+      copiar(txt,b);
+    });
+    head.appendChild(b);
+  });
+})();
+</script>
+</body></html>

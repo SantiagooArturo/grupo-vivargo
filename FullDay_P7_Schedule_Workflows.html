@@ -44,6 +44,7 @@ h1.title{font-family:var(--fd);font-weight:800;color:var(--navy);font-size:42px;
 .ctl button{all:unset;cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:50%;color:#dbe9f6}.ctl button:hover{background:rgba(255,255,255,.12)}
 .progress{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,var(--blue),var(--blue-l));z-index:60;transition:width .4s ease}
 .hint{position:fixed;top:14px;right:16px;z-index:50;color:#7f9bb5;font-size:12px}
+.codehead .cp{margin-left:auto;font-family:var(--fb);font-size:10.5px;font-weight:700;letter-spacing:.5px;text-transform:none;color:#d6ebf8;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:4px 12px;cursor:pointer;transition:background .2s ease}.codehead .cp:hover{background:#0090C0;border-color:#0090C0;color:#fff}.codehead .cp.ok{background:#1F8A5B;border-color:#1F8A5B;color:#fff}
 </style></head>
 <body>
 <div class="progress" id="progress"></div><div class="hint">← → · F pantalla completa</div>
@@ -202,4 +203,28 @@ document.addEventListener('keydown',e=>{if(['ArrowRight',' ','PageDown','Enter']
 stage.addEventListener('click',e=>{if(e.clientX>window.innerWidth*0.5)show(idx+1);else show(idx-1)});
 function fit(){document.getElementById('deck').style.transform=`scale(${Math.min(window.innerWidth/1280,window.innerHeight/720)})`}
 window.addEventListener('resize',fit);fit();if(window.lucide)lucide.createIcons();show(0);
-</script></body></html>
+</script><script>
+/* Botón «Copiar» en cada bloque de prompt: copia el texto sin la cabecera. */
+(function(){
+  function copiar(txt,btn){
+    var ok=function(){btn.textContent='Copiado ✓';btn.classList.add('ok');
+      setTimeout(function(){btn.textContent='Copiar';btn.classList.remove('ok')},1800)};
+    var legacy=function(){var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';
+      ta.style.opacity='0';document.body.appendChild(ta);ta.select();
+      try{document.execCommand('copy');ok()}finally{ta.remove()}};
+    if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(txt).then(ok,legacy);else legacy();
+  }
+  document.querySelectorAll('.codeblock').forEach(function(cb){
+    var head=cb.querySelector('.codehead');
+    if(!head||head.querySelector('.cp'))return;
+    var b=document.createElement('button');b.type='button';b.className='cp';b.textContent='Copiar';
+    b.addEventListener('click',function(e){
+      e.stopPropagation();
+      head.style.display='none';var txt=cb.innerText.trim();head.style.display='';
+      copiar(txt,b);
+    });
+    head.appendChild(b);
+  });
+})();
+</script>
+</body></html>
